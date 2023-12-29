@@ -1,13 +1,13 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Redes from '../components/Redes.astro';
-import Card from '../components/Card.astro';
+import Especial from '../components/Especial.astro';
 ---
 
 
 <Layout title="Portafolio Joaquín León">
 	<main>
-		<section class=" w-full  py-44 flex  justify-evenly mb-40">
+		<section class=" w-full  py-40 flex  justify-evenly ">
 			<div>
 				<h1 class="font-bold text-5xl pb-4">
 					Hola soy Joaquín León 
@@ -16,10 +16,10 @@ import Card from '../components/Card.astro';
 			</div>
 			<img class="w-[350px] rounded-full" src= '../../public/JoaquinPerfil.jpg'/>
 		</section>
-		<section>
+		<section class="py-10">
 			<h2 class="text-3xl font-bold text-center py-10">Sobre Mi</h2>
 		
-				<p class="text-center  mx-auto w-[745px] ">Me atrae las tecnologías, software y hardware.
+				<p class="text-center  text-lg mx-auto w-[745px] ">Me atrae las tecnologías, software y hardware.
 					me gusta aprovechar todos los recursos online
 					disponibles con afán de ser un desarrollador
 					capaz de encontrar soluciones sofisticadas a
@@ -27,10 +27,11 @@ import Card from '../components/Card.astro';
 					Me gusta empatizar con mis compañeros a fin
 					de tener un ambiente de trabajo cordial y
 					productivo.</p>
-			<Redes/>
-				
-
-			
+			<Redes/>			
+		</section>
+		<section class="py-10" >
+			<h2 class="text-3xl font-bold text-center py-10">Experiencia </h2>
+			<Especial/>
 		</section>
 		
 	</main>
