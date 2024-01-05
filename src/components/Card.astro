@@ -2,10 +2,9 @@
 interface Props {
 	title: string;
 	body: string;
-	href: string;
 }
 
-const { href, title, body } = Astro.props;
+const { title, body } = Astro.props;
 ---
 
 <li class="link-card">
@@ -33,6 +32,7 @@ const { href, title, body } = Astro.props;
 		box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
 		padding: 1rem;
 		width: 18rem;
+		transition: transform .3s;
 	}
 	
 	h2 {
@@ -46,6 +46,7 @@ const { href, title, body } = Astro.props;
 		margin-bottom: 0;
 	}
 	.link-card:is(:hover, :focus-within) {
+		transform: scale(1.15);
 		background-position: 0;
 		background-image: var(--accent-gradient);
 	}
