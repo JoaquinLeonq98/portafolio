@@ -1,24 +1,38 @@
+---
+import { Image } from "astro:assets";
+import GitHub from '../assets/github.png'
+import Sobre from '../assets/sobre.png'
+import Web from '../assets/sitio-web.png'
+import Tel from '../assets/whatsapp.png'
+
+---
+
+
 <div class="flex justify-evenly py-10">
             <div class="  flex flex-col  items-center rounded-xl  hover:shadow-xl hover:transform hover:scale-110 duration-200 pb-10 w-72 max-w-sm  bg-white border border-gray-200  shadow dark:bg-gray-900 dark:border-gray-700 ">
-                        <a href = "joaquinleonquero00@gmail.com"><img class="w-[36px] rounded-ful py-6" src= '../../public/sobre.png' alt="icono de correo"/> </a>
-                        <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">Email:</h5>
+                          <Image class="w-[36px] rounded-ful py-6" src={Sobre} alt='imagen de sobre'/> 
+                        <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">Correo: </h5>
                         <p class="text-sm text-gray-400 dark:text-gray-300">joaquinleonquero00@gmail.com</p>
             </div>
-            <div class="flex flex-col items-center hover:shadow-xl hover:transform hover:scale-110 duration-200 pb-10 w-72 max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-900 dark:border-gray-700">
-                        <img class="w-[36px] rounded-full  py-6" src= '../../public/whatsapp.png' alt="icono telefono" />
-                        <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">Telefono:</h5>
-                         <p class="text-sm text-gray-400 dark:text-gray-300"><span class="text-white text-bold px-1">+52</span>5545095380</p>
-            </div>
-
-            <div class="flex md:flex-col items-center hover:shadow-xl hover:transform hover:scale-110 duration-200 pb-10 w-72 max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-900 dark:border-gray-700">
-                      <a href="https://github.com/JoaquinLeonq98"> <img class="w-[36px] rounded-full py-6" src= '../../public/github.png' alt="icono Github"/></a>  
-                        <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">Git-hub:</h5>
-                        <p class="text-sm text-gray-400 dark:text-gray-300">JoaquinLeonq98</p>
-            </div>
-            <div class="flex flex-col items-center hover:shadow-xl hover:transform hover:scale-110 duration-200 pb-10 w-72 max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-900 dark:border-gray-700">
-                       <a href="https://tridotmx.com/"><img class="w-[36px] rounded-full py-6" src= '../../public/sitio-web.png' alt="icono de web"/></a> 
-                        <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">Tridooot: </h5>
-                        <p class="text-sm text-gray-400 dark:text-gray-300">Desarrollo y Diseño Web</p>
+            <div class="  flex flex-col  items-center rounded-xl  hover:shadow-xl hover:transform hover:scale-110 duration-200 pb-10 w-72 max-w-sm  bg-white border border-gray-200  shadow dark:bg-gray-900 dark:border-gray-700 ">
                         
+                          <Image class="w-[36px] rounded-ful py-6" src={Tel} alt='icono de telefono'/> 
+                    
+                        <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">Telefono: </h5>
+                        <p class="text-sm text-gray-400 dark:text-gray-300"><span class="font-bold">+52</span> 5545095380</p>
             </div>
+            <div class="  flex flex-col  items-center rounded-xl  hover:shadow-xl hover:transform hover:scale-110 duration-200 pb-10 w-72 max-w-sm  bg-white border border-gray-200  shadow dark:bg-gray-900 dark:border-gray-700 ">
+                        <a href ="https://github.com/JoaquinLeonq98">
+                          <Image class="w-[36px] rounded-ful py-6" src={GitHub} alt='logo de git-hub'/> 
+                        </a>
+                        <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">Git-hub: </h5>
+                        <p class="text-sm text-gray-400 dark:text-gray-300">joaquinleonq98</p>
+            </div>
+            <div class="  flex flex-col  items-center rounded-xl  hover:shadow-xl hover:transform hover:scale-110 duration-200 pb-10 w-72 max-w-sm  bg-white border border-gray-200  shadow dark:bg-gray-900 dark:border-gray-700 ">
+              <a href ="https://tridotmx.com/">
+                <Image class="w-[36px] rounded-ful py-6" src={Web} alt='logo de web'/> 
+              </a>
+              <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">Sitio-Web: </h5>
+              <p class="text-sm text-gray-400 dark:text-gray-300">Tridot</p>
+  </div>
 </div> 

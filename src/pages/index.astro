@@ -3,19 +3,22 @@ import Layout from '../layouts/Layout.astro';
 import Redes from '../components/Redes.astro';
 import Especial from '../components/Especial.astro';
 import Tecnologys from '../components/Tecnologys.astro';
+
+import { Image } from 'astro:assets';
+import JoaquinPerfil from "../assets/JoaquinPerfil.jpg"
 ---
 
 
 <Layout title="Portafolio Joaquín León">
 	<main>
-		<section class=" w-full  py-40 flex  justify-evenly  mb-24">
+		<section class=" w-full  py-32 flex  justify-evenly  mb-24">
 			<div>
-				<h1 class="font-bold text-5xl pb-4">
+				<h1 class="font-bold text-7xl pb-4">
 					Hola soy Joaquín León 
 				</h1>
-				<h2 class="text-xl opacity-80">Desarrollador  Web e Ingeniero en Gestión de Tecnologías de la información</h2>
+				<h2 class="text-2xl opacity-80">Desarrollador  Web e Ingeniero en Gestión de Tecnologías de la información</h2>
 			</div>
-			<img class="w-[350px] rounded-full" src= '../../public/JoaquinPerfil.jpg' alt="Foto de Perfil Joaquín"/>
+			<Image class="w-[350px] rounded-full" src= {JoaquinPerfil} alt="Foto de Perfil Joaquín"/>
 		</section>
 		<section class="py-10">
 			<h2 class="text-3xl font-bold text-center py-10">Sobre Mi</h2>
@@ -28,14 +31,24 @@ import Tecnologys from '../components/Tecnologys.astro';
 					Me gusta empatizar con mis compañeros a fin
 					de tener un ambiente de trabajo cordial y
 					productivo.</p>
-			<Redes/>			
+			<Redes 
+			title='Correo'
+			text='joaquileonquero00@gmail.com'
+			link=''
+			altText='Imagen de Email'
+			imagePath='src/assets/sobre.png'
+			/>			
 		</section>
 		<section class="py-2" >
 			<h2 class="text-3xl font-bold text-center py-10">Experiencia </h2>
 			<Especial/>
 		</section>
-		<section>
-			<Tecnologys/>
+		<section class="py-2 ">
+			<h2 class="text-3xl font-bold text-center py-10">Conocimientos </h2>
+			<div class="grid grid-rows-3 grid-flow-col gap-6">
+				<Tecnologys/>
+			</div>
+			
 		</section>
 	</main>
 </Layout>
