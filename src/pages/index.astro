@@ -6,24 +6,26 @@ import Tecnologys from '../components/Tecnologys.astro';
 
 import { Image } from 'astro:assets';
 import JoaquinPerfil from "../assets/JoaquinPerfil.jpg"
+import Form from '../components/Form.astro';
 ---
 
 
 <Layout title="Portafolio Joaquín León">
 	<main>
-		<section class=" w-full  py-32 flex  justify-evenly  mb-24">
-			<div>
-				<h1 class="font-bold text-7xl pb-4">
+		<section class=" w-full  py-32 flex  justify-center gap-28  my-20 container">
+			<div class="py-28">
+				<h1 class="font-bold text-7xl mb-6 text-wrap">
 					Hola soy Joaquín León 
 				</h1>
 				<h2 class="text-2xl opacity-80">Desarrollador  Web e Ingeniero en Gestión de Tecnologías de la información</h2>
 			</div>
-			<Image class="w-[350px] rounded-full" src= {JoaquinPerfil} alt="Foto de Perfil Joaquín"/>
+			<Image class="w-44 md:w-[350px]  rounded-full" src= {JoaquinPerfil} alt="Foto de Perfil Joaquín"/>
 		</section>
-		<section class="py-10">
+		<section class="py-10 my-10 md:flex sm:flex-col">
 			<h2 class="text-3xl font-bold text-center py-10">Sobre Mi</h2>
 		
-				<p class="text-center  text-lg mx-auto w-[745px] ">Me atrae las tecnologías, software y hardware.
+				<p class="text-center  text-lg mx-auto w-[745px] text-wrap mb-20 ">
+					Me atrae las tecnologías, software y hardware.
 					me gusta aprovechar todos los recursos online
 					disponibles con afán de ser un desarrollador
 					capaz de encontrar soluciones sofisticadas a
@@ -40,15 +42,16 @@ import JoaquinPerfil from "../assets/JoaquinPerfil.jpg"
 			/>			
 		</section>
 		<section class="py-2" >
-			<h2 class="text-3xl font-bold text-center py-10">Experiencia </h2>
+			<h2 class="text-3xl font-bold text-center py-10 mb-16">Experiencia </h2>
 			<Especial/>
 		</section>
-		<section class="py-2">
+		<section class="py-2 my-11 w-full">
 			<h2 class="text-3xl font-bold text-center py-10">Conocimientos </h2>
-			<div >
 				<Tecnologys/>
-			</div>
-			
+		</section>
+		<section class="flex flex-col justify-center w-full">
+			<h2 class="text-3xl font-bold text-center py-10">Contacto</h2>
+			<Form/>
 		</section>
 	</main>
 </Layout>
