@@ -3,28 +3,19 @@ import Layout from '../layouts/Layout.astro';
 import Redes from '../components/Redes.astro';
 import Especial from '../components/Especial.astro';
 import Tecnologys from '../components/Tecnologys.astro';
-
-import { Image } from 'astro:assets';
-import JoaquinPerfil from "../assets/JoaquinPerfil.jpg"
+import Banner from '../components/Banner.astro';
 import Form from '../components/Form.astro';
+import Footer from '../components/Footer.astro';
 ---
 
 
 <Layout title="Portafolio Joaquín León">
 	<main>
-		<section class=" w-full  py-32 flex  justify-center gap-28  my-20 container">
-			<div class="py-28">
-				<h1 class="font-bold text-7xl mb-6 text-wrap">
-					Hola soy Joaquín León 
-				</h1>
-				<h2 class="text-2xl opacity-80">Desarrollador  Web e Ingeniero en Gestión de Tecnologías de la información</h2>
-			</div>
-			<Image class="w-44 md:w-[350px]  rounded-full" src= {JoaquinPerfil} alt="Foto de Perfil Joaquín"/>
-		</section>
-		<section class="py-10 my-10 md:flex sm:flex-col">
-			<h2 class="text-3xl font-bold text-center py-10">Sobre Mi</h2>
+		<Banner/>
+		<section class="container flex flex-col items-center px-4 py-12 mx-auto text-center">
+			<h2 class="max-w-2xl mx-auto text-2xl font-semibold tracking-tight text-gray-800 xl:text-3xl dark:text-white">Sobre Mi</h2>
 		
-				<p class="text-center  text-lg mx-auto w-[745px] text-wrap mb-20 ">
+				<p class="max-w-4xl mt-6 text-center text-gray-500 dark:text-gray-300">
 					Me atrae las tecnologías, software y hardware.
 					me gusta aprovechar todos los recursos online
 					disponibles con afán de ser un desarrollador
@@ -42,16 +33,19 @@ import Form from '../components/Form.astro';
 			/>			
 		</section>
 		<section class="py-2" >
-			<h2 class="text-3xl font-bold text-center py-10 mb-16">Experiencia </h2>
+			<h2 class="text-3xl font-bold text-center py-10 mb-16 dark:text-white">Experiencia </h2>
 			<Especial/>
 		</section>
-		<section class="py-2 my-11 w-full">
-			<h2 class="text-3xl font-bold text-center py-10">Conocimientos </h2>
+		<section class="py-2 my-11 w-full" id="conocimientos">
+			<h2 class="text-3xl font-bold text-center py-10 dark:text-white">Conocimientos </h2>
 				<Tecnologys/>
 		</section>
-		<section class="flex flex-col justify-center w-full">
-			<h2 class="text-3xl font-bold text-center py-10">Contacto</h2>
-			<Form/>
+		<section class="flex flex-col justify-center w-full dark:border-none" id="contacto">
+			<h2 class="text-3xl font-bold text-center py-10 dark:text-white">Contacto</h2>
+			<div class="border-black boder">
+				<Form/>
+			</div>
+				<Footer/>
 		</section>
 	</main>
 </Layout>
