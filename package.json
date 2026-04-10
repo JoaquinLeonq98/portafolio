@@ -22,5 +22,37 @@
     "tailwindcss": "^3.4.17",
     "typescript": "^5.8.3",
     "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@types/estree": "^1.0.8",
+    "@types/geojson": "^7946.0.16",
+    "@types/hast": "^3.0.4",
+    "@types/leaflet": "^1.9.21",
+    "@types/mdast": "^4.0.4",
+    "@types/ms": "^2.1.0",
+    "@types/nlcst": "^2.0.3",
+    "@types/node": "^25.5.2",
+    "@typescript-eslint/project-service": "^8.58.1",
+    "@typescript-eslint/tsconfig-utils": "^8.58.1",
+    "@typescript-eslint/types": "^8.58.1",
+    "@typescript-eslint/typescript-estree": "^8.58.1",
+    "@typescript-eslint/visitor-keys": "^8.58.1",
+    "@vue/compiler-sfc": "^3.5.32",
+    "postcss": "^8.5.9"
+  },
+  "overrides": {
+    "@astrojs/internal-helpers": "0.8.0",
+    "bare-fs": "4.5.5",
+    "bare-os": "3.8.6",
+    "cookie-es": "1.2.2",
+    "defu": "6.1.6",
+    "listhen": "1.9.0",
+    "lodash": "4.17.21",
+    "lru-cache": "11.3.1",
+    "h3": "1.15.10",
+    "tinyglobby": "0.2.15",
+    "uqr": "0.1.2",
+    "@vue/shared": "3.5.31",
+    "@vue/compiler-ssr": "3.5.31"
   }
 }
