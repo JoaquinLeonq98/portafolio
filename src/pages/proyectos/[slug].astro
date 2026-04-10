@@ -1,0 +1,105 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Footer from '../../components/Footer.astro';
+import { getProjectBySlug, projects } from '../../data/projects';
+
+export function getStaticPaths() {
+  return projects.map((p) => ({ params: { slug: p.slug } }));
+}
+
+const { slug } = Astro.params;
+const project = slug ? getProjectBySlug(slug) : undefined;
+
+if (!project) {
+  return Astro.redirect('/');
+}
+
+const paragraphs = project.fullDescription.split(/\n\n+/).filter(Boolean);
+const gallery = project.gallery ?? [];
+---
+
+<Layout title={`${project.title} — Joaquín León Quero`} description={project.excerpt}>
+  <main>
+    <article class="border-b border-white/5 py-16 md:py-24">
+      <div class="mx-auto max-w-3xl px-4 sm:px-6">
+        <p class="text-xs font-semibold uppercase tracking-wider text-sky-400/90">Proyecto</p>
+        <h1 class="mt-2 text-3xl font-semibold tracking-tight text-white md:text-4xl">
+          {project.title}
+        </h1>
+
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a
+            href={project.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-xl bg-sky-500 px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-sky-400"
+          >
+            Visitar sitio
+            <span aria-hidden="true">↗</span>
+          </a>
+          <a
+            href="/#proyectos"
+            class="inline-flex items-center gap-2 rounded-xl border border-white/15 px-5 py-3 text-sm font-medium text-slate-200 transition hover:border-sky-500/40 hover:text-white"
+          >
+            ← Volver a proyectos
+          </a>
+        </div>
+
+        {
+          project.confidentialityNote && (
+            <aside
+              class="mt-8 rounded-xl border border-amber-500/25 bg-amber-500/10 px-4 py-3 text-sm leading-relaxed text-amber-100/95"
+              role="note"
+            >
+              <span class="font-semibold text-amber-200">Aviso: </span>
+              {project.confidentialityNote}
+            </aside>
+          )
+        }
+
+        <div class="mt-10 space-y-5">
+          {paragraphs.map((block) => (
+            <p class="text-base leading-relaxed text-slate-400">{block}</p>
+          ))}
+        </div>
+
+        <section class="mt-12" aria-labelledby="tech-sheet-heading">
+          <h2 id="tech-sheet-heading" class="text-lg font-semibold text-white">
+            Ficha técnica
+          </h2>
+          <ul class="mt-4 list-disc space-y-2 pl-5 text-slate-400">
+            {project.techSheet.map((line) => (
+              <li class="leading-relaxed">{line}</li>
+            ))}
+          </ul>
+        </section>
+
+        {
+          gallery.length > 0 && (
+            <section class="mt-12" aria-labelledby="gallery-heading">
+              <h2 id="gallery-heading" class="text-lg font-semibold text-white">
+                Imágenes
+              </h2>
+              <div class="mt-4 grid gap-4 sm:grid-cols-2">
+                {gallery.map((item) => (
+                  <figure class="overflow-hidden rounded-xl border border-white/10 bg-slate-900/50">
+                    <img
+                      src={item.src}
+                      alt={item.alt}
+                      width={800}
+                      height={500}
+                      class="h-auto w-full object-cover object-center"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </figure>
+                ))}
+              </div>
+            </section>
+          )
+        }
+      </div>
+    </article>
+    <Footer />
+  </main>
+</Layout>

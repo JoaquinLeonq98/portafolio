@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="50%" stop-color="#1e1b4b"/>
+      <stop offset="100%" stop-color="#0c4a6e"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#a78bfa"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="675" rx="24" fill="url(#bg)"/>
+  <rect x="48" y="40" width="1104" height="48" rx="12" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.1)"/>
+  <circle cx="76" cy="64" r="8" fill="#f87171"/>
+  <circle cx="100" cy="64" r="8" fill="#fbbf24"/>
+  <circle cx="124" cy="64" r="8" fill="#4ade80"/>
+  <rect x="48" y="112" width="320" height="515" rx="16" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.08)"/>
+  <rect x="392" y="112" width="760" height="515" rx="16" fill="rgba(255,255,255,0.03)" stroke="url(#accent)" stroke-width="2"/>
+  <text x="420" y="180" fill="rgba(255,255,255,0.9)" font-family="system-ui,sans-serif" font-size="28" font-weight="600">Headless WordPress</text>
+  <text x="420" y="220" fill="rgba(148,163,184,0.95)" font-family="system-ui,sans-serif" font-size="18">API REST · contenido editorial · front Astro</text>
+  <rect x="420" y="260" width="680" height="12" rx="6" fill="rgba(148,163,184,0.25)"/>
+  <rect x="420" y="290" width="520" height="12" rx="6" fill="rgba(148,163,184,0.15)"/>
+  <rect x="420" y="320" width="600" height="12" rx="6" fill="rgba(148,163,184,0.15)"/>
+  <rect x="420" y="380" width="704" height="200" rx="12" fill="rgba(56,189,248,0.08)" stroke="rgba(56,189,248,0.25)"/>
+  <text x="440" y="480" fill="rgba(56,189,248,0.9)" font-family="system-ui,sans-serif" font-size="20" font-weight="500">Astro · build estático ultrarrápido</text>
+  <rect x="72" y="140" width="272" height="36" rx="8" fill="rgba(56,189,248,0.15)"/>
+  <rect x="72" y="192" width="240" height="36" rx="8" fill="rgba(255,255,255,0.06)"/>
+  <rect x="72" y="244" width="256" height="36" rx="8" fill="rgba(255,255,255,0.06)"/>
+  <text x="600" y="640" fill="rgba(148,163,184,0.6)" font-family="system-ui,sans-serif" font-size="14">Vista previa conceptual del proyecto</text>
+</svg>

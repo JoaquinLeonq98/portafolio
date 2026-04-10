@@ -1,0 +1,19 @@
+---
+alwaysApply: true
+---
+# 🚀 Proyecto Inmobiliaria: Regla Maestra y Entornos
+
+## 🎯 Misión de la IA
+Este es el **PROYECTO BASE/PLANTILLA** de la empresa. **La regla más importante es la REPLICABILIDAD**. Tu tarea es extender el código de manera consistente con los patrones y estructuras de directorios actuales.
+
+## 🏛️ Componentes y Patrones
+1.  **Backend (Microservicios):** Usa Node.js/Express, MongoDB y RabbitMQ. Sigue la estructura modular con `service-apigateway` y microservicios especializados (ej. `service-connect`).
+2.  **Frontend Web (web-application):** Desarrollado en Angular 17. Sigue una estructura de módulos `private` y `public`.
+3.  **Frontend Móvil (app_application):** Desarrollado en Flutter. Sigue una estructura `global`, `private`, y `public`.
+
+## 🌍 Gestión de Entornos (Clave)
+El flujo de desarrollo se basa en la conexión automática al ambiente TEST remoto:
+
+* **DEV (Local):** Uso para desarrollo. Se conecta automáticamente a las APIs del ambiente **TEST** remoto.
+* **TEST (Remoto):** Ambiente de Integración y Pruebas.
+* **Despliegue:** Manual por SFTP. Se usa `ecosystem.config.js` y **PM2** para la gestión de procesos.

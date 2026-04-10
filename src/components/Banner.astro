@@ -1,24 +1,100 @@
 ---
-import { Image } from "astro:assets";
-import JoaquinPerfil from "../assets/JoaquinPerfil.jpg"
+import { Image } from 'astro:assets';
+import JoaquinPerfil from '../assets/JoaquinPerfil.jpg';
+
+const cvFile = 'CV-JOAQUÍN LEÓN QUERO.docx.pdf';
+const cvHref = `/${encodeURIComponent(cvFile)}`;
 ---
 
-<div class="container px-6 py-16 mx-auto mb-20">
-    <div class="items-center lg:flex">
-        <div class="w-full lg:w-1/2">
-            <div class="lg:max-w-lg mb-16">
-                <h1 class="text-3xl font-semibold text-gray-800 dark:text-white lg:text-4xl">Hola Soy Joaquín León Quero <span class="text-blue-500">Desarrollador e Ingeniero TI</span></h1>
+<section
+  class="scroll-mt-24 border-b border-white/5 pb-28 pt-20 md:pb-36 md:pt-24"
+  id="inicio"
+  aria-labelledby="hero-title"
+>
+  <div class="mx-auto grid max-w-6xl items-center gap-16 px-4 sm:px-6 lg:grid-cols-2 lg:gap-24">
+    <div class="motion-hero order-2 flex flex-col gap-8 sm:gap-9 lg:order-1">
+      <p class="inline-flex w-fit items-center gap-2 rounded-full border border-sky-500/20 bg-sky-500/10 px-3.5 py-1.5 text-xs font-medium text-sky-300">
+        <span class="relative flex h-2 w-2">
+          <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-sky-400 opacity-75" />
+          <span class="relative inline-flex h-2 w-2 rounded-full bg-sky-400" />
+        </span>
+        Disponible para proyectos y colaboraciones
+      </p>
 
-                <p class="mx-3 mb-7 text-gray-600 dark:text-gray-400">Cofounder  y CEO de <span class="font-medium text-blue-500">Tridot</span> México</p>
-                <a href="./Joaquín_León_QueroCV.pdf" download="Joaquín León Quero CV" class="px-5 py-2 text-sm tracking-wider text-white uppercase transition-colors duration-300 transform bg-blue-600 rounded-lg lg:w-auto lg:mx-4 hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
-                
-                    Descargar CV
-                </a>
-            </div>
-        </div>
+      <h1
+        id="hero-title"
+        class="block text-4xl font-semibold tracking-tight text-white sm:text-5xl lg:text-[3.25rem] lg:leading-[1.1]"
+      >
+        Joaquín León Quero
+        <span class="mt-2 block bg-gradient-to-r from-sky-400 to-violet-400 bg-clip-text text-transparent">
+          Ingeniero en Gestión de TI · Full-stack
+        </span>
+      </h1>
 
-        <div class="flex items-center justify-center w-full mt-6 lg:mt-0 lg:w-1/2">
-            <Image class="w-full h-full max-w-md rounded-full" src={JoaquinPerfil} alt="Foto `Perfil">
+      <p class="max-w-xl text-lg leading-[1.85] text-slate-400">
+        Llevo <span class="text-slate-300">más de tres años en TI</span> en distintos roles y proyectos,
+        con fuerte paso por <span class="text-slate-300">banca</span> y entornos exigentes. He trabajado
+        con el stack que refleja mi CV — <span class="text-slate-300">Angular</span>,
+        <span class="text-slate-300">NestJS</span>, <span class="text-slate-300">Node</span>,
+        <span class="text-slate-300">Linux</span>, <span class="text-slate-300">Docker</span>,
+        <span class="text-slate-300">nube</span> y más — y me apasiona
+        <span class="text-slate-300">seguir aprendiendo tecnologías nuevas</span>, aunque aún no figuren
+        todas en el CV. En <span class="text-slate-300">COPARMEX</span> participé en la app en
+        <span class="text-slate-300">Flutter</span> (publicada en Play Store y App Store), hasta
+        <span class="text-slate-300">despliegue</span>. Cofundador de{' '}
+        <span class="font-medium text-slate-200">Tridot</span> México.
+      </p>
+
+      <div class="flex flex-wrap gap-x-4 gap-y-3 sm:gap-x-5 sm:gap-y-4">
+        <a
+          href={cvHref}
+          download={cvFile}
+          class="inline-flex items-center justify-center rounded-xl bg-sky-500 px-6 py-3.5 text-sm font-semibold text-slate-950 shadow-lg shadow-sky-500/25 transition hover:bg-sky-400"
+        >
+          Descargar CV
+        </a>
+        <a
+          href="https://www.linkedin.com/in/joaquinlq/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center justify-center rounded-xl border border-white/15 bg-white/5 px-6 py-3.5 text-sm font-semibold text-white transition hover:border-white/25 hover:bg-white/10"
+        >
+          LinkedIn
+        </a>
+        <a
+          href="#proyectos"
+          class="inline-flex items-center justify-center rounded-xl px-6 py-3.5 text-sm font-semibold text-slate-300 transition hover:text-white"
+        >
+          Ver proyectos ↓
+        </a>
+      </div>
+
+      <dl class="grid grid-cols-2 gap-6 sm:max-w-md sm:gap-8">
+        <div class="rounded-xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+          <dt class="text-xs font-medium uppercase tracking-wider text-slate-500">Ubicación</dt>
+          <dd class="mt-1 text-sm font-medium text-white">Querétaro, México</dd>
         </div>
+        <div class="rounded-xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+          <dt class="text-xs font-medium uppercase tracking-wider text-slate-500">Idiomas</dt>
+          <dd class="mt-1 text-sm font-medium text-white">ES nativo · EN B1 técnico</dd>
+        </div>
+      </dl>
     </div>
-</div>
+
+    <div class="order-1 flex justify-center lg:order-2">
+      <div class="relative">
+        <div
+          class="absolute -inset-4 rounded-full bg-gradient-to-tr from-sky-500/40 to-violet-600/40 opacity-60 blur-2xl"
+          aria-hidden="true"
+        />
+        <Image
+          class="relative h-auto w-full max-w-md rounded-2xl border border-white/10 object-cover shadow-2xl shadow-black/40 ring-1 ring-white/10"
+          src={JoaquinPerfil}
+          alt="Retrato de Joaquín León Quero"
+          widths={[400, 600, 800]}
+          sizes="(max-width: 1024px) 90vw, 28rem"
+        />
+      </div>
+    </div>
+  </div>
+</section>

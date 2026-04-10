@@ -1,0 +1,24 @@
+---
+alwaysApply: true
+---
+
+# 📱 Estándar de Frontend Móvil (Flutter)
+
+## 1. Estructura de Directorios (A replicar)
+La arquitectura móvil sigue un patrón `global`/`private`/`public`.
+
+**A. Componentes Globales (`lib/global`):**
+* `/global/models`: Definición de modelos de datos (Dart objects) para mapear las respuestas de la API.
+* `/global/routes`: Manejo de la navegación global.
+* `/global/screens`: Pantallas que son accesibles desde cualquier lugar o que no tienen lógica de negocio.
+* `/global/services`: Módulos para la conexión HTTP, Socket.IO, y Web Push Notifications.
+* `/global/widgets`: Componentes de UI reutilizables.
+
+**B. Módulos de Lógica (`lib/private` y `lib/public`):**
+* **Lógica de Negocio:** Las funcionalidades deben residir en las carpetas de `private` (requiere login) o `public` (no requiere login).
+* **Patrón de Carpeta:** Cada funcionalidad (`account`, `contact`, `home`) debe contener su propia lógica de Estado (BLoC/Provider) y Widgets específicos.
+
+## 2. Gestión de Estado y Comunicación
+* **Gestión de Estado:** El patrón oficial para este proyecto es **[Inserta tu patrón: Ej. BLoC/Cubit, Provider, o Riverpod]**.
+* **Peticiones:** La lógica para interactuar con el API Gateway debe ser gestionada por los servicios definidos en `/global/services`.
+* **Nuevas Pantallas/Funcionalidades:** Siempre deben crearse como una nueva subcarpeta dentro de `private` o `public` para mantener la modularidad.

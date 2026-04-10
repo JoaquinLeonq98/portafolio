@@ -1,0 +1,38 @@
+---
+interface Props {
+  eyebrow?: string;
+  title: string;
+  subtitle?: string;
+  id?: string;
+  /** Menos márgenes y tipografía — útil en bloques secundarios (p. ej. proyectos). */
+  compact?: boolean;
+}
+
+const { eyebrow, title, subtitle, id, compact = false } = Astro.props;
+---
+
+<div class:list={['mx-auto max-w-3xl text-center', compact ? 'mb-10 md:mb-14' : 'mb-14 md:mb-20']}>
+  {eyebrow && (
+    <p class:list={['font-medium uppercase tracking-[0.2em] text-sky-400/90 mb-2', compact ? 'text-xs' : 'text-sm']}>
+      {eyebrow}
+    </p>
+  )}
+  <h2
+    id={id}
+    class:list={[
+      'font-semibold tracking-tight text-white',
+      compact ? 'text-2xl sm:text-3xl md:text-4xl' : 'text-3xl sm:text-4xl md:text-5xl',
+    ]}
+  >
+    {title}
+  </h2>
+  {subtitle && (
+    <p class:list={['text-slate-400 leading-relaxed', compact ? 'mt-4 text-sm md:text-base' : 'mt-3 text-lg']}>
+      {subtitle}
+    </p>
+  )}
+  <div
+    class:list={['mx-auto rounded-full bg-gradient-to-r from-sky-400 to-violet-500', compact ? 'mt-4 h-0.5 w-12' : 'mt-6 h-1 w-16']}
+    aria-hidden="true"
+  />
+</div>

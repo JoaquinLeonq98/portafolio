@@ -1,0 +1,95 @@
+---
+import ProjectCard from './ProjectCard.astro';
+import { projects } from '../data/projects';
+---
+
+<div class="projects-showcase" data-projects-showcase>
+  <!-- Escritorio y tablet ancha: las 3 tarjetas visibles sin recortes -->
+  <div class="projects-grid-desktop hidden gap-6 lg:grid lg:grid-cols-3 lg:items-stretch xl:gap-8">
+    {
+      projects.map((p) => (
+        <div class="min-w-0">
+          <ProjectCard
+            title={p.title}
+            excerpt={p.excerpt}
+            previewSrc={p.previewSrc}
+            previewFit={p.previewFit}
+            tech={p.tech}
+            href={p.href}
+            slug={p.slug}
+          />
+        </div>
+      ))
+    }
+  </div>
+
+  <!-- Móvil / tablet: carrusel horizontal -->
+  <div class="lg:hidden" data-carousel>
+    <div class="flex items-stretch gap-2">
+      <button
+        type="button"
+        class="inline-flex h-10 w-10 shrink-0 items-center justify-center self-center rounded-full border border-white/15 bg-white/5 text-xl text-white transition hover:border-sky-500/40 hover:bg-white/10 hover:text-sky-300"
+        data-carousel-prev
+        aria-label="Proyecto anterior"
+      >
+        ‹
+      </button>
+
+      <div
+        class="min-h-0 min-w-0 flex-1"
+        data-carousel-track
+        tabindex="0"
+        role="region"
+        aria-label="Carrusel de proyectos"
+      >
+        <div
+          class="project-carousel-scroll flex snap-x snap-mandatory gap-6 overflow-x-auto scroll-smooth pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        >
+          {
+            projects.map((p) => (
+              <div class="w-[min(100%,calc(100vw-5.5rem))] max-w-sm shrink-0 snap-center">
+                <ProjectCard
+                  title={p.title}
+                  excerpt={p.excerpt}
+                  previewSrc={p.previewSrc}
+                  previewFit={p.previewFit}
+                  tech={p.tech}
+                  href={p.href}
+                  slug={p.slug}
+                />
+              </div>
+            ))
+          }
+        </div>
+        <p class="mt-2 text-center text-[11px] text-slate-500">Desliza para ver los tres proyectos</p>
+      </div>
+
+      <button
+        type="button"
+        class="inline-flex h-10 w-10 shrink-0 items-center justify-center self-center rounded-full border border-white/15 bg-white/5 text-xl text-white transition hover:border-sky-500/40 hover:bg-white/10 hover:text-sky-300"
+        data-carousel-next
+        aria-label="Proyecto siguiente"
+      >
+        ›
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const root = document.querySelector('[data-carousel]');
+  const track = root?.querySelector('.project-carousel-scroll') as HTMLElement | null;
+  const prev = root?.querySelector('[data-carousel-prev]') as HTMLButtonElement | null;
+  const next = root?.querySelector('[data-carousel-next]') as HTMLButtonElement | null;
+
+  if (track && prev && next) {
+    const step = () => Math.max(track.clientWidth * 0.85, 260);
+
+    prev.addEventListener('click', () => {
+      track.scrollBy({ left: -step(), behavior: 'smooth' });
+    });
+    next.addEventListener('click', () => {
+      track.scrollBy({ left: step(), behavior: 'smooth' });
+    });
+  }
+</script>

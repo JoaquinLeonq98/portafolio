@@ -1,0 +1,20 @@
+---
+alwaysApply: true
+---
+# 💻 Estándar de Frontend Web (Angular 17)
+
+## 1. Estructura de Módulos (Clave)
+La aplicación Angular está dividida en dos grandes módulos, replicables para cualquier nueva funcionalidad:
+
+* `/app/private`: Contiene la estructura y los módulos que requieren **Autenticación** (ej. Dashboard, módulos de Agentes, etc.).
+    * **Contenido:** `private.module.ts`, `private.routes.ts`, y las subcarpetas de `business-modules`.
+* `/app/public`: Contiene la estructura y los módulos **accesibles sin autenticación** (ej. Login, Landing Page, etc.).
+    * **Contenido:** `public.module.ts`, `public.routes.ts`, y las subcarpetas de `base-modules`.
+
+## 2. Desarrollo de Componentes
+* **Patrón:** Se debe mantener la convención de usar módulos con componentes funcionales (o Standalone) para cada módulo de negocio.
+* **Ruteo:** La lógica de ruteo de cada sección debe estar clara en `private.routes.ts` o `public.routes.ts`, manteniendo la separación por autenticación.
+
+## 3. Interacción con Backend
+* **API:** Todas las peticiones HTTP se dirigen al API Gateway.
+* **Lógica Base:** La lógica de navegación principal y componentes compartidos (`menus`, `base`) debe residir en sus respectivas carpetas dentro de `/app`.

@@ -6,48 +6,69 @@ import Tecnologys from '../components/Tecnologys.astro';
 import Banner from '../components/Banner.astro';
 import Form from '../components/Form.astro';
 import Footer from '../components/Footer.astro';
+import Projects from '../components/Projects.astro';
+import SectionHeading from '../components/SectionHeading.astro';
 ---
 
+<Layout title="Joaquín León Quero — Portafolio">
+  <main>
+    <Banner />
+    <Projects />
 
-<Layout title="Portafolio Joaquín León">
-	<main>
-		<Banner/>
-		<section class="container flex flex-col items-center px-4 py-12 mx-auto text-center">
-			<h2 class="max-w-2xl mx-auto text-2xl font-semibold tracking-tight text-gray-800 xl:text-3xl dark:text-white">Sobre mi</h2>
-		
-				<p class="max-w-4xl mt-6 text-center text-gray-500 dark:text-gray-300">
-					Me atrae las tecnologías, software y hardware.
-					Me gusta aprovechar todos los recursos online
-					disponibles con afán de ser un desarrollador
-					capaz de encontrar soluciones sofisticadas a
-					problemas complejos.
-					Disfruto empatizar con mis compañeros a fin
-					de tener un ambiente de trabajo cordial y
-					productivo.</p>
-			<Redes 
-			title='Correo'
-			text='joaquileonquero00@gmail.com'
-			link=''
-			altText='Imagen de Email'
-			imagePath='src/assets/sobre.png'
-			/>			
-		</section>
-		<section class="py-2" >
-			<h2 class="text-3xl font-bold text-center py-10 mb-16 dark:text-white">Experiencia </h2>
-			<Especial/>
-		</section>
-		<section class="py-2 my-11 w-full" id="conocimientos">
-			<h2 class="text-3xl font-bold text-center py-10 dark:text-white">Conocimientos </h2>
-				<Tecnologys/>
-		</section>
-		<section class="flex flex-col justify-center w-full dark:border-none" id="contacto">
-			<h2 class="text-3xl font-bold text-center py-10 dark:text-white">Contacto</h2>
-			<div class="border-black boder">
-				<Form/>
-			</div>
-				<Footer/>
-		</section>
-	</main>
+    <section class="scroll-mt-24 border-b border-white/5 py-20 md:py-28" id="sobre-mi">
+      <div class="mx-auto max-w-6xl px-4 sm:px-6">
+        <SectionHeading
+          eyebrow="Quién soy"
+          title="Sobre mí"
+          subtitle="Formación en Ingeniería en Gestión de TI (UVEG), más de tres años en TI, proyectos en banca y producto digital, y ganas constantes de aprender."
+        />
+        <div class="mx-auto max-w-3xl text-center">
+          <p class="text-lg leading-relaxed text-slate-400">
+            Llevo más de tres años en TI, con experiencia en varios proyectos de banca y producto digital.
+            He usado de forma recurrente Angular, Nest, Node, Next, Astro, Flutter, Linux, Docker y nube,
+            entre otras herramientas, y sigo ampliando stack por curiosidad y por necesidad del proyecto.
+            Me importa empatizar con el equipo y dejar entregas claras para negocio y para quien mantenga
+            el código después.
+          </p>
+        </div>
+        <div class="mt-14">
+          <Redes />
+        </div>
+      </div>
+    </section>
+
+    <section class="scroll-mt-24 py-20 md:py-28" id="servicios">
+      <div class="mx-auto max-w-6xl px-4 sm:px-6">
+        <SectionHeading
+          eyebrow="Cómo puedo ayudarte"
+          title="Servicios"
+          subtitle="Enfoque en negocio y resultados: digitalización, producto a medida y acompañamiento. El detalle técnico lo ves en cada proyecto."
+        />
+        <Especial />
+      </div>
+    </section>
+
+    <section class="scroll-mt-24 border-y border-white/5 bg-white/[0.02] py-20 md:py-28" id="stack">
+      <div class="mx-auto max-w-6xl px-4 sm:px-6">
+        <SectionHeading
+          eyebrow="Herramientas"
+          title="Stack principal"
+          subtitle="Tecnologías que uso con frecuencia en producto, backend y despliegue."
+        />
+        <Tecnologys />
+      </div>
+    </section>
+
+    <section class="scroll-mt-24 py-20 md:pb-12" id="contacto">
+      <div class="mx-auto max-w-6xl px-4 sm:px-6">
+        <SectionHeading
+          eyebrow="Hablemos"
+          title="Contacto"
+          subtitle="Cuéntame tu idea, tu equipo o tu reto técnico. Respondo con propuesta y siguientes pasos."
+        />
+        <Form />
+      </div>
+      <Footer />
+    </section>
+  </main>
 </Layout>
-
-
