@@ -22,3 +22,6 @@ pnpm-debug.log*
 
 # Local Netlify folder
 .netlify
+
+# media too large for GitHub (store externally)
+src/assets/projects/*.mp4

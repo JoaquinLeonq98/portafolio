@@ -1,34 +1,17 @@
 ---
 import ProjectCard from './ProjectCard.astro';
 import { projects } from '../data/projects';
+
+const loopProjects = [...projects, ...projects, ...projects];
+const slideCount = projects.length;
 ---
 
 <div class="projects-showcase" data-projects-showcase>
-  <!-- Escritorio y tablet ancha: las 3 tarjetas visibles sin recortes -->
-  <div class="projects-grid-desktop hidden gap-6 lg:grid lg:grid-cols-3 lg:items-stretch xl:gap-8">
-    {
-      projects.map((p) => (
-        <div class="min-w-0">
-          <ProjectCard
-            title={p.title}
-            excerpt={p.excerpt}
-            previewSrc={p.previewSrc}
-            previewFit={p.previewFit}
-            tech={p.tech}
-            href={p.href}
-            slug={p.slug}
-          />
-        </div>
-      ))
-    }
-  </div>
-
-  <!-- Móvil / tablet: carrusel horizontal -->
-  <div class="lg:hidden" data-carousel>
-    <div class="flex items-stretch gap-2">
+  <div data-carousel data-carousel-count={slideCount}>
+    <div class="flex items-stretch gap-2 sm:gap-3">
       <button
         type="button"
-        class="inline-flex h-10 w-10 shrink-0 items-center justify-center self-center rounded-full border border-white/15 bg-white/5 text-xl text-white transition hover:border-sky-500/40 hover:bg-white/10 hover:text-sky-300"
+        class="inline-flex h-10 w-10 shrink-0 items-center justify-center self-center rounded-full border border-white/15 bg-white/5 text-xl text-white transition hover:border-sky-500/40 hover:bg-white/10 hover:text-sky-300 sm:h-11 sm:w-11"
         data-carousel-prev
         aria-label="Proyecto anterior"
       >
@@ -41,13 +24,16 @@ import { projects } from '../data/projects';
         tabindex="0"
         role="region"
         aria-label="Carrusel de proyectos"
+        aria-roledescription="carrusel"
       >
         <div
-          class="project-carousel-scroll flex snap-x snap-mandatory gap-6 overflow-x-auto scroll-smooth pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          class="project-carousel-scroll flex snap-x snap-proximity gap-4 overflow-x-auto scroll-smooth pb-2 sm:gap-6 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          data-carousel-scroll
+          style="overscroll-behavior-x: contain;"
         >
           {
-            projects.map((p) => (
-              <div class="w-[min(100%,calc(100vw-5.5rem))] max-w-sm shrink-0 snap-center">
+            loopProjects.map((p) => (
+              <div class="carousel-slide w-[min(100%,calc(100vw-5.5rem))] max-w-sm shrink-0 snap-start sm:w-[min(24rem,calc(100vw-7rem))]">
                 <ProjectCard
                   title={p.title}
                   excerpt={p.excerpt}
@@ -56,17 +42,18 @@ import { projects } from '../data/projects';
                   tech={p.tech}
                   href={p.href}
                   slug={p.slug}
+                  inDevelopment={p.inDevelopment}
+                  previewContainerClass={p.previewContainerClass}
                 />
               </div>
             ))
           }
         </div>
-        <p class="mt-2 text-center text-[11px] text-slate-500">Desliza para ver los tres proyectos</p>
       </div>
 
       <button
         type="button"
-        class="inline-flex h-10 w-10 shrink-0 items-center justify-center self-center rounded-full border border-white/15 bg-white/5 text-xl text-white transition hover:border-sky-500/40 hover:bg-white/10 hover:text-sky-300"
+        class="inline-flex h-10 w-10 shrink-0 items-center justify-center self-center rounded-full border border-white/15 bg-white/5 text-xl text-white transition hover:border-sky-500/40 hover:bg-white/10 hover:text-sky-300 sm:h-11 sm:w-11"
         data-carousel-next
         aria-label="Proyecto siguiente"
       >
@@ -77,19 +64,105 @@ import { projects } from '../data/projects';
 </div>
 
 <script>
-  const root = document.querySelector('[data-carousel]');
-  const track = root?.querySelector('.project-carousel-scroll') as HTMLElement | null;
-  const prev = root?.querySelector('[data-carousel-prev]') as HTMLButtonElement | null;
-  const next = root?.querySelector('[data-carousel-next]') as HTMLButtonElement | null;
+  (function () {
+    const root = document.querySelector('[data-carousel]');
+    const track = root?.querySelector('[data-carousel-scroll]') as HTMLElement | null;
+    const prev = root?.querySelector('[data-carousel-prev]') as HTMLButtonElement | null;
+    const next = root?.querySelector('[data-carousel-next]') as HTMLButtonElement | null;
+    const count = Number(root?.getAttribute('data-carousel-count') || '0');
 
-  if (track && prev && next) {
-    const step = () => Math.max(track.clientWidth * 0.85, 260);
+    if (!root || !track || !prev || !next || count < 1) return;
 
-    prev.addEventListener('click', () => {
-      track.scrollBy({ left: -step(), behavior: 'smooth' });
+    const scrollTrack = track;
+
+    /** gap del track (gap-4 / gap-6) */
+    const gapPx = () => {
+      const g = getComputedStyle(scrollTrack).gap;
+      const parsed = parseFloat(g);
+      return Number.isFinite(parsed) ? parsed : 24;
+    };
+
+    function slideWidth(): number {
+      const first = scrollTrack.querySelector('.carousel-slide') as HTMLElement | null;
+      if (!first) return 0;
+      return first.getBoundingClientRect().width + gapPx();
+    }
+
+    function setSpan(): number {
+      return slideWidth() * count;
+    }
+
+    function setScrollBehavior(jump: boolean) {
+      scrollTrack.style.scrollBehavior = jump ? 'auto' : '';
+      scrollTrack.style.scrollSnapType = jump ? 'none' : '';
+    }
+
+    function jumpIfNeeded() {
+      const span = setSpan();
+      if (span <= 0) return;
+      const buf = 12;
+      const left = scrollTrack.scrollLeft;
+      if (left >= span * 2 - buf) {
+        setScrollBehavior(true);
+        scrollTrack.scrollLeft -= span;
+        requestAnimationFrame(() => setScrollBehavior(false));
+      } else if (left <= buf) {
+        setScrollBehavior(true);
+        scrollTrack.scrollLeft += span;
+        requestAnimationFrame(() => setScrollBehavior(false));
+      }
+    }
+
+    function normalizeToMiddleBand() {
+      const span = setSpan();
+      if (span <= 0) return;
+      setScrollBehavior(true);
+      let x = scrollTrack.scrollLeft;
+      while (x >= span * 2) x -= span;
+      while (x < span) x += span;
+      scrollTrack.scrollLeft = x;
+      requestAnimationFrame(() => setScrollBehavior(false));
+    }
+
+    function goToMiddle() {
+      const span = setSpan();
+      if (span > 0) {
+        setScrollBehavior(true);
+        scrollTrack.scrollLeft = span;
+        requestAnimationFrame(() => setScrollBehavior(false));
+      }
+    }
+
+    function step(delta: number) {
+      const w = slideWidth();
+      if (w <= 0) return;
+      scrollTrack.scrollBy({ left: delta * w, behavior: 'smooth' });
+    }
+
+    prev.addEventListener('click', () => step(-1));
+    next.addEventListener('click', () => step(1));
+
+    let scrollRaf = 0;
+    scrollTrack.addEventListener(
+      'scroll',
+      () => {
+        cancelAnimationFrame(scrollRaf);
+        scrollRaf = requestAnimationFrame(jumpIfNeeded);
+      },
+      { passive: true },
+    );
+
+    scrollTrack.addEventListener('scrollend', jumpIfNeeded);
+
+    let resizeT = 0;
+    const ro = new ResizeObserver(() => {
+      clearTimeout(resizeT);
+      resizeT = window.setTimeout(normalizeToMiddleBand, 120);
     });
-    next.addEventListener('click', () => {
-      track.scrollBy({ left: step(), behavior: 'smooth' });
+    ro.observe(scrollTrack);
+
+    requestAnimationFrame(() => {
+      requestAnimationFrame(goToMiddle);
     });
-  }
+  })();
 </script>

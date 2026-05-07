@@ -1,4 +1,5 @@
 ---
+import { Image } from 'astro:assets';
 import Layout from '../../layouts/Layout.astro';
 import Footer from '../../components/Footer.astro';
 import { getProjectBySlug, projects } from '../../data/projects';
@@ -16,27 +17,63 @@ if (!project) {
 
 const paragraphs = project.fullDescription.split(/\n\n+/).filter(Boolean);
 const gallery = project.gallery ?? [];
+const galleryHero = gallery[0];
+const galleryRest = gallery.slice(1);
+const visitHref = project.href?.trim();
+const docPdf = project.documentationPdfHref?.trim();
+const demoVideoHref = project.demoVideoHref?.trim();
+
+function galleryFullSrc(item: (typeof gallery)[number]): string {
+  return 'image' in item ? item.image.src : item.src;
+}
 ---
 
 <Layout title={`${project.title} — Joaquín León Quero`} description={project.excerpt}>
   <main>
     <article class="border-b border-white/5 py-16 md:py-24">
-      <div class="mx-auto max-w-3xl px-4 sm:px-6">
+      <div class="project-detail-inner mx-auto max-w-3xl px-4 sm:px-6">
         <p class="text-xs font-semibold uppercase tracking-wider text-sky-400/90">Proyecto</p>
-        <h1 class="mt-2 text-3xl font-semibold tracking-tight text-white md:text-4xl">
-          {project.title}
-        </h1>
+        <div class="mt-2 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-4 sm:gap-y-2">
+          <h1 class="text-3xl font-semibold tracking-tight text-white md:text-4xl">{project.title}</h1>
+          {
+            project.inDevelopment && (
+              <span
+                class="w-fit rounded-md border border-[#1e3d32]/55 bg-[#2d4a3e] px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wider text-[#e8f4ec]"
+                role="status"
+              >
+                En desarrollo
+              </span>
+            )
+          }
+        </div>
 
         <div class="mt-8 flex flex-wrap gap-3">
-          <a
-            href={project.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="inline-flex items-center gap-2 rounded-xl bg-sky-500 px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-sky-400"
-          >
-            Visitar sitio
-            <span aria-hidden="true">↗</span>
-          </a>
+          {
+            visitHref && (
+              <a
+                href={visitHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-2 rounded-xl bg-sky-500 px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-sky-400"
+              >
+                Visitar sitio
+                <span aria-hidden="true">↗</span>
+              </a>
+            )
+          }
+          {
+            docPdf && (
+              <a
+                href={docPdf}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-2 rounded-xl border border-violet-400/35 bg-violet-500/15 px-5 py-3 text-sm font-semibold text-violet-100 transition hover:border-violet-400/55 hover:bg-violet-500/25"
+              >
+                Documentación (PDF)
+                <span aria-hidden="true">↗</span>
+              </a>
+            )
+          }
           <a
             href="/#proyectos"
             class="inline-flex items-center gap-2 rounded-xl border border-white/15 px-5 py-3 text-sm font-medium text-slate-200 transition hover:border-sky-500/40 hover:text-white"
@@ -75,31 +112,211 @@ const gallery = project.gallery ?? [];
         </section>
 
         {
-          gallery.length > 0 && (
-            <section class="mt-12" aria-labelledby="gallery-heading">
-              <h2 id="gallery-heading" class="text-lg font-semibold text-white">
-                Imágenes
+          demoVideoHref && (
+            <section class="mt-12" aria-labelledby="demo-video-heading">
+              <h2 id="demo-video-heading" class="text-lg font-semibold text-white">
+                Vídeo demostrativo
               </h2>
-              <div class="mt-4 grid gap-4 sm:grid-cols-2">
-                {gallery.map((item) => (
-                  <figure class="overflow-hidden rounded-xl border border-white/10 bg-slate-900/50">
-                    <img
-                      src={item.src}
-                      alt={item.alt}
-                      width={800}
-                      height={500}
-                      class="h-auto w-full object-cover object-center"
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  </figure>
-                ))}
+              <p class="mt-2 text-sm leading-relaxed text-slate-400">
+                Por la complejidad de infraestructura, la demo no siempre está desplegada públicamente. Si hay un vídeo
+                disponible, lo enlazo aquí.
+              </p>
+              <div class="mt-4">
+                <a
+                  href={demoVideoHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-slate-100 transition hover:border-sky-500/40 hover:bg-white/10"
+                >
+                  Ver vídeo
+                  <span aria-hidden="true">↗</span>
+                </a>
               </div>
             </section>
           )
         }
+
       </div>
+
+      {
+        gallery.length > 0 && galleryHero && (
+          <section
+            class="project-gallery-section mx-auto mt-16 max-w-6xl px-4 sm:px-6"
+            aria-labelledby="gallery-heading"
+          >
+            <h2 id="gallery-heading" class="text-xl font-semibold tracking-tight text-white md:text-2xl">
+              Galería
+            </h2>
+
+            <div class="mt-6 space-y-5 md:space-y-6">
+              <figure
+                class="group relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-slate-900 via-slate-950 to-slate-900 shadow-[0_20px_50px_-20px_rgba(0,0,0,0.85)] ring-1 ring-white/[0.06]"
+              >
+                <button
+                  type="button"
+                  class="relative block w-full cursor-zoom-in text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500/70"
+                  data-project-gallery-open
+                  data-full-src={galleryFullSrc(galleryHero)}
+                  data-alt={galleryHero.alt}
+                  aria-label={galleryHero.alt}
+                >
+                  <div class="flex max-h-[min(72vh,640px)] min-h-[200px] items-center justify-center p-3 sm:p-5 md:p-8">
+                    {'image' in galleryHero ? (
+                      <Image
+                        src={galleryHero.image}
+                        alt={galleryHero.alt}
+                        class="max-h-[min(68vh,600px)] w-full object-contain object-center transition duration-300 group-hover:scale-[1.01]"
+                        loading="eager"
+                        decoding="async"
+                        quality={90}
+                      />
+                    ) : (
+                      <img
+                        src={galleryHero.src}
+                        alt={galleryHero.alt}
+                        width={1200}
+                        height={720}
+                        class="max-h-[min(68vh,600px)] w-full object-contain object-center transition duration-300 group-hover:scale-[1.01]"
+                        loading="eager"
+                        decoding="async"
+                      />
+                    )}
+                  </div>
+                </button>
+                <figcaption class="border-t border-white/5 px-4 py-3 text-sm text-slate-400 sm:px-5">
+                  {galleryHero.alt}
+                </figcaption>
+              </figure>
+
+              {
+                galleryRest.length > 0 && (
+                  <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-5">
+                    {galleryRest.map((item) => (
+                      <figure
+                        class="group flex flex-col overflow-hidden rounded-xl border border-white/10 bg-gradient-to-b from-slate-900/90 to-slate-950 shadow-lg ring-1 ring-white/[0.04] transition hover:border-sky-500/25 hover:ring-sky-500/15"
+                      >
+                        <button
+                          type="button"
+                          class="relative aspect-[4/3] w-full cursor-zoom-in overflow-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500/70"
+                          data-project-gallery-open
+                          data-full-src={galleryFullSrc(item)}
+                          data-alt={item.alt}
+                          aria-label={item.alt}
+                        >
+                          {'image' in item ? (
+                            <Image
+                              src={item.image}
+                              alt={item.alt}
+                              class="h-full w-full object-contain object-center p-2 transition duration-300 group-hover:scale-[1.02]"
+                              loading="lazy"
+                              decoding="async"
+                              quality={88}
+                            />
+                          ) : (
+                            <img
+                              src={item.src}
+                              alt={item.alt}
+                              width={800}
+                              height={600}
+                              class="h-full w-full object-contain object-center p-2 transition duration-300 group-hover:scale-[1.02]"
+                              loading="lazy"
+                              decoding="async"
+                            />
+                          )}
+                        </button>
+                        <figcaption class="line-clamp-2 border-t border-white/5 px-3 py-2.5 text-xs leading-snug text-slate-500">
+                          {item.alt}
+                        </figcaption>
+                      </figure>
+                    ))}
+                  </div>
+                )
+              }
+            </div>
+          </section>
+        )
+      }
+
+      {
+        gallery.length > 0 && (
+          <dialog
+            id="project-gallery-lightbox"
+            class="w-[min(96vw,1200px)] max-w-none border-0 bg-transparent p-0 [&::backdrop]:bg-slate-950/85"
+            aria-labelledby="project-gallery-lightbox-title"
+          >
+            <div
+              class="overflow-hidden rounded-2xl border border-white/10 bg-slate-950 shadow-2xl ring-1 ring-white/10"
+            >
+              <div class="flex items-start justify-between gap-3 border-b border-white/10 px-4 py-3 sm:px-5">
+                <p
+                  id="project-gallery-lightbox-title"
+                  class="min-w-0 flex-1 text-sm leading-snug text-slate-200"
+                >
+                </p>
+                <button
+                  type="button"
+                  class="shrink-0 rounded-lg border border-white/15 bg-white/5 px-3 py-1.5 text-xs font-medium text-white transition hover:border-sky-500/40 hover:bg-white/10"
+                  data-close-project-gallery
+                >
+                  Cerrar
+                </button>
+              </div>
+              <div class="max-h-[min(85vh,900px)] overflow-auto p-3 sm:p-5">
+                <img
+                  id="project-gallery-lightbox-img"
+                  class="mx-auto h-auto max-h-[min(78vh,820px)] w-full max-w-full object-contain"
+                  alt=""
+                  width="1200"
+                  height="800"
+                />
+              </div>
+            </div>
+          </dialog>
+        )
+      }
     </article>
+    {
+      gallery.length > 0 && (
+        <script is:inline>
+          (function () {
+            var dlg = document.getElementById('project-gallery-lightbox');
+            var img = document.getElementById('project-gallery-lightbox-img');
+            var cap = document.getElementById('project-gallery-lightbox-title');
+            if (!dlg || !img || !cap) return;
+
+            function openFrom(btn) {
+              var src = btn.getAttribute('data-full-src');
+              var alt = btn.getAttribute('data-alt') || '';
+              if (!src) return;
+              img.src = src;
+              img.alt = alt;
+              cap.textContent = alt;
+              if (typeof dlg.showModal === 'function') dlg.showModal();
+            }
+
+            document.querySelectorAll('[data-project-gallery-open]').forEach(function (btn) {
+              btn.addEventListener('click', function () {
+                openFrom(btn);
+              });
+            });
+
+            var closeBtn = document.querySelector('[data-close-project-gallery]');
+            if (closeBtn)
+              closeBtn.addEventListener('click', function () {
+                dlg.close();
+              });
+
+            dlg.addEventListener('click', function (e) {
+              if (e.target === dlg) dlg.close();
+            });
+
+            dlg.addEventListener('close', function () {
+              img.removeAttribute('src');
+            });
+          })();
+        </script>
+      )
+    }
     <Footer />
   </main>
 </Layout>

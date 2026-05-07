@@ -7,4 +7,6 @@ export type StackIconId =
   | 'wordpress'
   | 'rest'
   | 'brevo'
-  | 'netlify';
+  | 'netlify'
+  | 'cobol'
+  | 'jcl';

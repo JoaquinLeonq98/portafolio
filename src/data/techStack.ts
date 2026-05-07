@@ -5,7 +5,7 @@ import mongo from '../assets/mongodb.png';
 import linux from '../assets/linux.png';
 
 /**
- * Stack compacto alineado al CV. Para añadir tecnología:
+ * Stack compacto alineado al CV (incluye herramientas de IA asistida al final). Para añadir tecnología:
  * - `remote`: icono desde Simple Icons CDN (slug y color en https://simpleicons.org )
  * - `image`: asset local en /src/assets
  * - `icon`: SVG en `StackIcon.astro` (ids en `stackIconIds.ts`)
@@ -29,4 +29,8 @@ export const techStack: TechStackItem[] = [
   { type: 'remote', label: 'AWS', src: '/icons/aws.svg' },
   { type: 'remote', label: 'Vercel', src: 'https://cdn.simpleicons.org/vercel/ffffff' },
   { type: 'image', label: 'Linux', src: linux, imgClass: 'object-contain' },
+  { type: 'remote', label: 'Cursor', src: 'https://cdn.simpleicons.org/cursor/ffffff' },
+  { type: 'remote', label: 'GitHub Copilot', src: 'https://cdn.simpleicons.org/githubcopilot/ffffff' },
+  { type: 'remote', label: 'Anthropic', src: 'https://cdn.simpleicons.org/anthropic' },
+  { type: 'remote', label: 'OpenAI', src: 'https://cdn.simpleicons.org/openai' },
 ];

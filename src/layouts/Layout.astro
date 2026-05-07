@@ -9,7 +9,7 @@ interface Props {
 
 const {
   title,
-  description = 'Joaquín León Quero — Ingeniero en Gestión de TI. Más de 3 años en TI, proyectos en banca, full-stack (Angular, Nest, Node, Flutter), QA y despliegues. Portafolio y contacto.',
+  description = 'Joaquín León Quero — Ingeniero en Gestión de TI. Más de 5 años en TI, proyectos en banca, full-stack (Angular, Nest, Node, Flutter), QA y despliegues; flujo de desarrollo con agentes de IA para mayor productividad. Portafolio y contacto.',
 } = Astro.props;
 ---
 
@@ -211,18 +211,21 @@ const {
       }
     }
 
-    #proyectos.motion-visible .projects-grid-desktop > * {
+    #proyectos.motion-visible .projects-showcase .carousel-slide {
       animation: portfolioTileIn 0.55s cubic-bezier(0.22, 1, 0.36, 1) backwards;
     }
 
-    #proyectos.motion-visible .projects-grid-desktop > *:nth-child(1) {
+    #proyectos.motion-visible .projects-showcase .carousel-slide:nth-child(4n + 1) {
       animation-delay: 0.05s;
     }
-    #proyectos.motion-visible .projects-grid-desktop > *:nth-child(2) {
-      animation-delay: 0.12s;
+    #proyectos.motion-visible .projects-showcase .carousel-slide:nth-child(4n + 2) {
+      animation-delay: 0.1s;
     }
-    #proyectos.motion-visible .projects-grid-desktop > *:nth-child(3) {
-      animation-delay: 0.19s;
+    #proyectos.motion-visible .projects-showcase .carousel-slide:nth-child(4n + 3) {
+      animation-delay: 0.15s;
+    }
+    #proyectos.motion-visible .projects-showcase .carousel-slide:nth-child(4n + 4) {
+      animation-delay: 0.2s;
     }
 
     #stack.motion-visible .motion-tech-stagger > * {
@@ -267,6 +270,18 @@ const {
     }
     #stack.motion-visible .motion-tech-stagger > *:nth-child(13) {
       animation-delay: 0.38s;
+    }
+    #stack.motion-visible .motion-tech-stagger > *:nth-child(14) {
+      animation-delay: 0.41s;
+    }
+    #stack.motion-visible .motion-tech-stagger > *:nth-child(15) {
+      animation-delay: 0.44s;
+    }
+    #stack.motion-visible .motion-tech-stagger > *:nth-child(16) {
+      animation-delay: 0.47s;
+    }
+    #stack.motion-visible .motion-tech-stagger > *:nth-child(17) {
+      animation-delay: 0.5s;
     }
 
     #servicios.motion-visible .services-grid > * {
