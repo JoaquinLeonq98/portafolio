@@ -20,6 +20,7 @@ export const techStack: TechStackItem[] = [
   { type: 'remote', label: 'Angular', src: 'https://cdn.simpleicons.org/angular/DD0031' },
   { type: 'remote', label: 'Flutter', src: 'https://cdn.simpleicons.org/flutter/02569B' },
   { type: 'remote', label: 'NestJS', src: 'https://cdn.simpleicons.org/nestjs/E0234E' },
+  { type: 'remote', label: 'Laravel', src: 'https://cdn.simpleicons.org/laravel/FF2D20' },
   { type: 'image', label: 'Node.js', src: node, imgClass: 'w-12 object-contain' },
   { type: 'remote', label: 'Next.js', src: 'https://cdn.simpleicons.org/nextdotjs/ffffff' },
   { type: 'icon', label: 'Astro', icon: 'astro' },

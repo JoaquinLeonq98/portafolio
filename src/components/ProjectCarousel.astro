@@ -1,50 +1,83 @@
 ---
 import ProjectCard from './ProjectCard.astro';
-import { projects } from '../data/projects';
+import { projects, type ProjectEntry } from '../data/projects';
 
-const loopProjects = [...projects, ...projects, ...projects];
-const slideCount = projects.length;
+type ProjectColumn = {
+  top: ProjectEntry;
+  bottom?: ProjectEntry;
+};
+
+function buildColumns(items: ProjectEntry[]): ProjectColumn[] {
+  const half = Math.ceil(items.length / 2);
+  return Array.from({ length: half }, (_, i) => ({
+    top: items[i],
+    bottom: items[i + half],
+  }));
+}
+
+const columns = buildColumns(projects);
+const LOOP_COPIES = 5;
+const loopColumns = Array.from({ length: LOOP_COPIES }, () => columns).flat();
+const columnCount = columns.length;
+const startCopy = Math.floor(LOOP_COPIES / 2);
 ---
 
 <div class="projects-showcase" data-projects-showcase>
-  <div data-carousel data-carousel-count={slideCount}>
-    <div class="flex items-stretch gap-2 sm:gap-3">
+  <div
+    data-carousel
+    data-carousel-columns={columnCount}
+    data-carousel-start={startCopy * columnCount}
+  >
+    <div class="flex items-center gap-2 sm:gap-3">
       <button
         type="button"
-        class="inline-flex h-10 w-10 shrink-0 items-center justify-center self-center rounded-full border border-white/15 bg-white/5 text-xl text-white transition hover:border-sky-500/40 hover:bg-white/10 hover:text-sky-300 sm:h-11 sm:w-11"
+        class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/15 bg-white/5 text-xl text-white transition hover:border-sky-500/40 hover:bg-white/10 hover:text-sky-300 sm:h-11 sm:w-11"
         data-carousel-prev
-        aria-label="Proyecto anterior"
+        aria-label="Columna anterior"
       >
         ‹
       </button>
 
       <div
-        class="min-h-0 min-w-0 flex-1"
-        data-carousel-track
+        class="carousel-viewport min-h-0 min-w-0 flex-1 overflow-hidden"
+        data-carousel-viewport
         tabindex="0"
         role="region"
-        aria-label="Carrusel de proyectos"
+        aria-label="Carrusel de proyectos en dos filas"
         aria-roledescription="carrusel"
       >
-        <div
-          class="project-carousel-scroll flex snap-x snap-proximity gap-4 overflow-x-auto scroll-smooth pb-2 sm:gap-6 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-          data-carousel-scroll
-          style="overscroll-behavior-x: contain;"
-        >
+        <div class="project-carousel-track flex gap-4 sm:gap-5" data-carousel-track>
           {
-            loopProjects.map((p) => (
-              <div class="carousel-slide w-[min(100%,calc(100vw-5.5rem))] max-w-sm shrink-0 snap-start sm:w-[min(24rem,calc(100vw-7rem))]">
+            loopColumns.map((col) => (
+              <div class="carousel-column flex shrink-0 flex-col gap-4 sm:gap-5">
                 <ProjectCard
-                  title={p.title}
-                  excerpt={p.excerpt}
-                  previewSrc={p.previewSrc}
-                  previewFit={p.previewFit}
-                  tech={p.tech}
-                  href={p.href}
-                  slug={p.slug}
-                  inDevelopment={p.inDevelopment}
-                  previewContainerClass={p.previewContainerClass}
+                  title={col.top.title}
+                  excerpt={col.top.excerpt}
+                  previewSrc={col.top.previewSrc}
+                  previewFit={col.top.previewFit}
+                  tech={col.top.tech}
+                  href={col.top.href}
+                  slug={col.top.slug}
+                  inDevelopment={col.top.inDevelopment}
+                  previewContainerClass={col.top.previewContainerClass}
                 />
+                {
+                  col.bottom ? (
+                    <ProjectCard
+                      title={col.bottom.title}
+                      excerpt={col.bottom.excerpt}
+                      previewSrc={col.bottom.previewSrc}
+                      previewFit={col.bottom.previewFit}
+                      tech={col.bottom.tech}
+                      href={col.bottom.href}
+                      slug={col.bottom.slug}
+                      inDevelopment={col.bottom.inDevelopment}
+                      previewContainerClass={col.bottom.previewContainerClass}
+                    />
+                  ) : (
+                    <div class="hidden flex-1 sm:block" aria-hidden="true" />
+                  )
+                }
               </div>
             ))
           }
@@ -53,9 +86,9 @@ const slideCount = projects.length;
 
       <button
         type="button"
-        class="inline-flex h-10 w-10 shrink-0 items-center justify-center self-center rounded-full border border-white/15 bg-white/5 text-xl text-white transition hover:border-sky-500/40 hover:bg-white/10 hover:text-sky-300 sm:h-11 sm:w-11"
+        class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/15 bg-white/5 text-xl text-white transition hover:border-sky-500/40 hover:bg-white/10 hover:text-sky-300 sm:h-11 sm:w-11"
         data-carousel-next
-        aria-label="Proyecto siguiente"
+        aria-label="Columna siguiente"
       >
         ›
       </button>
@@ -63,106 +96,148 @@ const slideCount = projects.length;
   </div>
 </div>
 
+<style>
+  .carousel-viewport {
+    container-type: inline-size;
+    container-name: projects-carousel;
+  }
+
+  /* 1 columna en móvil, 2 en tablet, 3 en desktop (2 filas × 3 cols visibles) */
+  .carousel-column {
+    width: 100cqw;
+  }
+
+  @container projects-carousel (min-width: 640px) {
+    .carousel-column {
+      width: calc((100cqw - 1rem) / 2);
+    }
+  }
+
+  @container projects-carousel (min-width: 1024px) {
+    .carousel-column {
+      width: calc((100cqw - 2.5rem) / 3);
+    }
+  }
+
+  .project-carousel-track {
+    will-change: transform;
+    transition: transform 0.72s cubic-bezier(0.22, 1, 0.36, 1);
+    backface-visibility: hidden;
+  }
+
+  .project-carousel-track.is-jumping {
+    transition: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .project-carousel-track {
+      transition-duration: 0.01ms;
+    }
+  }
+</style>
+
 <script>
   (function () {
     const root = document.querySelector('[data-carousel]');
-    const track = root?.querySelector('[data-carousel-scroll]') as HTMLElement | null;
+    const viewport = root?.querySelector('[data-carousel-viewport]') as HTMLElement | null;
+    const track = root?.querySelector('[data-carousel-track]') as HTMLElement | null;
     const prev = root?.querySelector('[data-carousel-prev]') as HTMLButtonElement | null;
     const next = root?.querySelector('[data-carousel-next]') as HTMLButtonElement | null;
-    const count = Number(root?.getAttribute('data-carousel-count') || '0');
+    const columnCount = Number(root?.getAttribute('data-carousel-columns') || '0');
+    const startIndex = Number(root?.getAttribute('data-carousel-start') || '0');
 
-    if (!root || !track || !prev || !next || count < 1) return;
+    if (!root || !viewport || !track || !prev || !next || columnCount < 1) return;
 
-    const scrollTrack = track;
+    const carouselViewport = viewport;
+    const carouselTrack = track;
 
-    /** gap del track (gap-4 / gap-6) */
-    const gapPx = () => {
-      const g = getComputedStyle(scrollTrack).gap;
-      const parsed = parseFloat(g);
-      return Number.isFinite(parsed) ? parsed : 24;
-    };
+    let index = startIndex;
+    let isAnimating = false;
+    let stepPx = 0;
 
-    function slideWidth(): number {
-      const first = scrollTrack.querySelector('.carousel-slide') as HTMLElement | null;
-      if (!first) return 0;
-      return first.getBoundingClientRect().width + gapPx();
+    const minIndex = startIndex;
+    const maxIndex = startIndex + columnCount;
+
+    function readStepPx(): number {
+      const col = carouselTrack.querySelector('.carousel-column') as HTMLElement | null;
+      if (!col) return 0;
+      const gap =
+        parseFloat(getComputedStyle(carouselTrack).columnGap || getComputedStyle(carouselTrack).gap) ||
+        16;
+      return col.getBoundingClientRect().width + gap;
     }
 
-    function setSpan(): number {
-      return slideWidth() * count;
+    function translateX(): string {
+      return `translate3d(${-index * stepPx}px, 0, 0)`;
     }
 
-    function setScrollBehavior(jump: boolean) {
-      scrollTrack.style.scrollBehavior = jump ? 'auto' : '';
-      scrollTrack.style.scrollSnapType = jump ? 'none' : '';
+    /** Salto instantáneo sin transición (reposicionamiento invisible del bucle). */
+    function jumpToCurrentIndex() {
+      carouselTrack.classList.add('is-jumping');
+      carouselTrack.style.transform = translateX();
+      void carouselTrack.offsetHeight;
+      carouselTrack.classList.remove('is-jumping');
     }
 
-    function jumpIfNeeded() {
-      const span = setSpan();
-      if (span <= 0) return;
-      const buf = 12;
-      const left = scrollTrack.scrollLeft;
-      if (left >= span * 2 - buf) {
-        setScrollBehavior(true);
-        scrollTrack.scrollLeft -= span;
-        requestAnimationFrame(() => setScrollBehavior(false));
-      } else if (left <= buf) {
-        setScrollBehavior(true);
-        scrollTrack.scrollLeft += span;
-        requestAnimationFrame(() => setScrollBehavior(false));
+    function animateToCurrentIndex() {
+      carouselTrack.classList.remove('is-jumping');
+      carouselTrack.style.transform = translateX();
+    }
+
+    function normalizeIndex(): boolean {
+      if (index >= maxIndex) {
+        index -= columnCount;
+        return true;
       }
-    }
-
-    function normalizeToMiddleBand() {
-      const span = setSpan();
-      if (span <= 0) return;
-      setScrollBehavior(true);
-      let x = scrollTrack.scrollLeft;
-      while (x >= span * 2) x -= span;
-      while (x < span) x += span;
-      scrollTrack.scrollLeft = x;
-      requestAnimationFrame(() => setScrollBehavior(false));
-    }
-
-    function goToMiddle() {
-      const span = setSpan();
-      if (span > 0) {
-        setScrollBehavior(true);
-        scrollTrack.scrollLeft = span;
-        requestAnimationFrame(() => setScrollBehavior(false));
+      if (index < minIndex) {
+        index += columnCount;
+        return true;
       }
+      return false;
+    }
+
+    function refreshLayout() {
+      stepPx = readStepPx();
+      jumpToCurrentIndex();
     }
 
     function step(delta: number) {
-      const w = slideWidth();
-      if (w <= 0) return;
-      scrollTrack.scrollBy({ left: delta * w, behavior: 'smooth' });
+      if (isAnimating || stepPx <= 0) return;
+      isAnimating = true;
+      index += delta;
+      animateToCurrentIndex();
     }
+
+    carouselTrack.addEventListener('transitionend', (event) => {
+      if (event.target !== carouselTrack || event.propertyName !== 'transform') return;
+      isAnimating = false;
+      if (normalizeIndex()) {
+        jumpToCurrentIndex();
+      }
+    });
 
     prev.addEventListener('click', () => step(-1));
     next.addEventListener('click', () => step(1));
 
-    let scrollRaf = 0;
-    scrollTrack.addEventListener(
-      'scroll',
-      () => {
-        cancelAnimationFrame(scrollRaf);
-        scrollRaf = requestAnimationFrame(jumpIfNeeded);
-      },
-      { passive: true },
-    );
-
-    scrollTrack.addEventListener('scrollend', jumpIfNeeded);
-
-    let resizeT = 0;
-    const ro = new ResizeObserver(() => {
-      clearTimeout(resizeT);
-      resizeT = window.setTimeout(normalizeToMiddleBand, 120);
+    carouselViewport.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowLeft') {
+        event.preventDefault();
+        step(-1);
+      } else if (event.key === 'ArrowRight') {
+        event.preventDefault();
+        step(1);
+      }
     });
-    ro.observe(scrollTrack);
+
+    let resizeTimer = 0;
+    const ro = new ResizeObserver(() => {
+      clearTimeout(resizeTimer);
+      resizeTimer = window.setTimeout(refreshLayout, 80);
+    });
+    ro.observe(carouselViewport);
 
     requestAnimationFrame(() => {
-      requestAnimationFrame(goToMiddle);
+      refreshLayout();
     });
   })();
 </script>

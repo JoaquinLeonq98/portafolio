@@ -1,12 +1,13 @@
 ---
 import type { ProjectTech } from '../data/projectTech';
 import { isRemoteTech } from '../data/projectTech';
+import { DEFAULT_PROJECT_PREVIEW, resolveProjectPreview } from '../data/projectDefaults';
 import StackIcon from './icons/StackIcon.astro';
 
 interface Props {
   title: string;
   excerpt: string;
-  previewSrc: string;
+  previewSrc?: string;
   tech: ProjectTech[];
   href?: string;
   slug: string;
@@ -28,6 +29,7 @@ const {
 } = Astro.props;
 const detailHref = `/proyectos/${slug}`;
 const visitHref = href?.trim();
+const resolvedPreview = resolveProjectPreview(previewSrc);
 
 const imgClass =
   previewFit === 'contain'
@@ -70,13 +72,15 @@ const previewOverlayClass =
         )
       }
       <img
-        src={previewSrc}
+        src={resolvedPreview}
         alt=""
         width={800}
         height={500}
         class={`${imgClass} transition duration-500 ease-out group-hover:scale-[1.03]`}
         loading="lazy"
         decoding="async"
+        data-project-preview-fallback={DEFAULT_PROJECT_PREVIEW}
+        onerror="if(this.dataset.projectPreviewFallback&&this.src!==this.dataset.projectPreviewFallback)this.src=this.dataset.projectPreviewFallback"
       />
       <div
         class={`pointer-events-none absolute inset-0 bg-gradient-to-t ${previewOverlayClass}`}

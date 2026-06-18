@@ -13,6 +13,7 @@ import bc4 from '../assets/projects/bankcore4.png';
 import bc5 from '../assets/projects/bankcore5.png';
 import bc7 from '../assets/projects/bankcore7.png';
 import type { ProjectTech } from './projectTech';
+import { DEFAULT_PROJECT_PREVIEW } from './projectDefaults';
 
 /** Galería: URL remota o pública (`src`) o imagen local optimizable (`image`). */
 export type ProjectGalleryItem =
@@ -28,7 +29,8 @@ export type ProjectEntry = {
   fullDescription: string;
   /** Viñetas de ficha técnica / alcance. */
   techSheet: string[];
-  previewSrc: string;
+  /** Si falta, la tarjeta usa `DEFAULT_PROJECT_PREVIEW`. */
+  previewSrc?: string;
   /** Logos u otros recuadros: `contain` evita recortes; por defecto `cover`. */
   previewFit?: 'cover' | 'contain';
   /** Enlace al sitio o demo en vivo; si falta, la ficha no muestra «Visitar sitio». */
@@ -59,24 +61,23 @@ export const projects: ProjectEntry[] = [
     excerpt:
       'Consultorio de psicoterapia cognitivo-conductual que funge como landing page y sitio institucional además de poder agendar citas y ver disponibilidad.',
     fullDescription: [
-      'Sitio institucional que comunica servicios presenciales y en línea, con enfoque en terapia cognitivo-conductual',
-      'La agenda guía a la persona en un primer paso con datos de quien asistirá y, tras validar, enlaza con Calendly para elegir horario de sesiones de 50 minutos, alineado a consentimiento informado y aviso de privacidad. El sitio replica la arquitectura de este portafolio (Astro, Tailwind, despliegue en Netlify) y suma piezas propias del sector: aviso de sitio en desarrollo, preferencias de cookies (técnicas y opciones informativas de análisis y publicidad), formulario de contacto con envío vía API y Resend (igual que en este portafolio) y Calendly para citas.',
-      'El proyecto sigue marcado como en desarrollo en el propio sitio: se amplía contenido y posicionamiento local mientras la profesional cierra el lanzamiento.',
+      'Sitio institucional que comunica servicios presenciales y en línea, con enfoque en terapia cognitivo-conductual.',
+      'La agenda incluye un componente de calendario desarrollado desde cero con los estilos del sitio. Tras recopilar los datos de quien asistirá, el flujo consulta disponibilidad real y permite reservar sesiones de 50 minutos mediante la Google Calendar API, respetando los horarios definidos por la profesional y alineado a consentimiento informado y aviso de privacidad.',
+      'El sitio comparte la arquitectura base de este portafolio (Astro, Tailwind, despliegue en Netlify) y suma piezas propias del sector: preferencias de cookies, formulario de contacto con envío vía API y Resend, y la agenda integrada con Google Calendar.',
     ].join('\n\n'),
     techSheet: [
       'Astro y Tailwind: multipágina estática, rendimiento y mantenimiento sencillo',
-      'Integración Calendly en la agenda (flujo previo + reserva de cita)',
+      'Componente de calendario propio (UI alineada al sitio) con Google Calendar API para disponibilidad y reserva de citas',
       'Correo transaccional con Resend (formulario de contacto vía función serverless en Netlify)',
       'Identidad visual de marca (logo, paleta y tipografía acorde al consultorio)',
-      'Banner de “sitio en desarrollo”, avisos legales y módulo de cookies con preferencias',
+      'Avisos legales y módulo de cookies con preferencias',
       'Secciones: inicio, servicios, sobre mí, talleres, agenda, FAQ, contacto y pie con enlaces útiles',
-      'Despliegue continuo en Netlify (URL pública de preproducción / lanzamiento)',
+      'Despliegue continuo en Netlify',
     ],
     previewSrc: logoSulem.src,
     previewFit: 'contain',
     previewContainerClass: 'bg-[#b8d1c1]',
     href: 'https://sulem-rodriguez-psicoterapia.netlify.app/',
-    inDevelopment: true,
     gallery: [
       { image: logoSulem, alt: 'Sulem Rodríguez — Psicoterapeuta (identidad visual)' },
       {
@@ -89,11 +90,11 @@ export const projects: ProjectEntry[] = [
       },
       {
         image: psicSulem3,
-        alt: 'Agenda — paso 1 (datos de quien asistirá) e integración con Calendly',
+        alt: 'Agenda — paso 1 (datos de quien asistirá) y calendario integrado',
       },
       {
         image: psicSulem4,
-        alt: 'Agenda — reserva de primera sesión y selección de horario en Calendly',
+        alt: 'Agenda — reserva de primera sesión y selección de horario disponible',
       },
       {
         image: psicSulem5,
@@ -108,8 +109,96 @@ export const projects: ProjectEntry[] = [
       { name: 'Astro', icon: 'astro' },
       { name: 'Tailwind', remoteIcon: 'https://cdn.simpleicons.org/tailwindcss/06B6D4' },
       { name: 'Resend', remoteIcon: 'https://cdn.simpleicons.org/resend/ffffff' },
-      { name: 'Calendly', remoteIcon: 'https://cdn.simpleicons.org/calendly/006BFF' },
+      {
+        name: 'Google Calendar',
+        remoteIcon: 'https://cdn.simpleicons.org/googlecalendar/4285F4',
+      },
       { name: 'Netlify', icon: 'netlify' },
+    ],
+  },
+  {
+    slug: 'punto-de-venta',
+    title: 'Punto de venta',
+    excerpt:
+      'Sistema POS con catálogo de productos, subtotales, descuentos y totales. Backend NestJS, front Next.js y PostgreSQL con TypeORM; base de datos en Docker.',
+    fullDescription: [
+      'Aplicación de punto de venta para registrar ventas con distintos productos, aplicar descuentos y calcular subtotales y totales de forma clara para el operador.',
+      'El backend expone la lógica de negocio y persistencia con NestJS, TypeORM y PostgreSQL; el frontend en Next.js ofrece la interfaz de caja. La base de datos corre en contenedor Docker para entornos reproducibles.',
+      'El proyecto sigue en desarrollo activo.',
+    ].join('\n\n'),
+    techSheet: [
+      'Backend NestJS con TypeORM sobre PostgreSQL',
+      'Frontend Next.js para la interfaz de punto de venta',
+      'Catálogo de productos con subtotales, descuentos y totales',
+      'PostgreSQL en Docker para desarrollo y despliegue local',
+      'Proyecto en desarrollo activo',
+    ],
+    previewSrc: DEFAULT_PROJECT_PREVIEW,
+    inDevelopment: true,
+    tech: [
+      { name: 'NestJS', remoteIcon: 'https://cdn.simpleicons.org/nestjs/E0234E' },
+      { name: 'Next.js', remoteIcon: 'https://cdn.simpleicons.org/nextdotjs/ffffff' },
+      { name: 'PostgreSQL', remoteIcon: 'https://cdn.simpleicons.org/postgresql/4169E1' },
+      { name: 'TypeScript', remoteIcon: 'https://cdn.simpleicons.org/typescript/3178C6' },
+      { name: 'Docker', remoteIcon: 'https://cdn.simpleicons.org/docker/2496ED' },
+    ],
+  },
+  {
+    slug: 'cash-tracker',
+    title: 'Cash Tracker',
+    excerpt:
+      'SaaS en desarrollo para seguimiento de efectivo: Laravel con Inertia y React, base Neon (PostgreSQL), Stripe, Laravel Cloud y Laravel AI SDK.',
+    fullDescription: [
+      'Cash Tracker es una aplicación SaaS que estoy desarrollando para ayudar a registrar y analizar movimientos de efectivo de forma sencilla.',
+      'El stack combina Laravel con Inertia.js y React en el front, Neon como base PostgreSQL gestionada, y está previsto integrar Stripe como pasarela de pagos. El despliegue apunta a Laravel Cloud; para capacidades de IA se utilizará el AI SDK oficial de Laravel.',
+      'El producto sigue en desarrollo activo: se están definiendo flujos de suscripción, panel de usuario y asistentes con IA.',
+    ].join('\n\n'),
+    techSheet: [
+      'Backend Laravel con Inertia.js y React en el front',
+      'PostgreSQL en Neon (base gestionada)',
+      'Stripe planificado como pasarela de pagos y suscripciones',
+      'Despliegue previsto en Laravel Cloud',
+      'Laravel AI SDK para funciones asistidas por IA',
+      'Proyecto en desarrollo activo',
+    ],
+    previewSrc: DEFAULT_PROJECT_PREVIEW,
+    inDevelopment: true,
+    tech: [
+      { name: 'Laravel', remoteIcon: 'https://cdn.simpleicons.org/laravel/FF2D20' },
+      { name: 'React', remoteIcon: 'https://cdn.simpleicons.org/react/61DAFB' },
+      { name: 'PostgreSQL', remoteIcon: 'https://cdn.simpleicons.org/postgresql/4169E1' },
+      { name: 'Stripe', remoteIcon: 'https://cdn.simpleicons.org/stripe/635BFF' },
+      { name: 'Neon', remoteIcon: 'https://cdn.simpleicons.org/neon/00E599' },
+    ],
+  },
+  {
+    slug: 'bot-trading-ia',
+    title: 'Bot de trading con IA',
+    excerpt:
+      'Bot en equipo entrenado con datos e IA: señales por Telegram, panel web con estadísticas, balance de futuros y apalancamiento. FastAPI, SQLite, Binance y Docker.',
+    fullDescription: [
+      'Proyecto colaborativo: un bot de trading entrenado con datos históricos e inteligencia artificial para emitir señales de operación.',
+      'Las señales se entregan por Telegram; una plataforma web muestra estadísticas del bot, historial de señales, balance de posiciones en futuros y recomendaciones de apalancamiento. La conexión con el exchange es vía API de Binance.',
+      'El backend usa FastAPI con SQLite; el frontend web se desarrolló con Next.js. Todo el entorno se despliega con Docker. El modelo sigue en fase de entrenamiento y afinación antes de operar en producción.',
+    ].join('\n\n'),
+    techSheet: [
+      'Backend FastAPI con SQLite para datos del bot y señales',
+      'Frontend Next.js: panel de estadísticas, señales y posiciones en futuros',
+      'Integración con Binance (API) para mercados y balance',
+      'Notificaciones y señales vía bot de Telegram',
+      'Modelo de IA entrenado con datos históricos (en fase de entrenamiento)',
+      'Despliegue con Docker',
+      'Proyecto en desarrollo en equipo',
+    ],
+    previewSrc: DEFAULT_PROJECT_PREVIEW,
+    inDevelopment: true,
+    tech: [
+      { name: 'FastAPI', remoteIcon: 'https://cdn.simpleicons.org/fastapi/009688' },
+      { name: 'Next.js', remoteIcon: 'https://cdn.simpleicons.org/nextdotjs/ffffff' },
+      { name: 'Binance', remoteIcon: 'https://cdn.simpleicons.org/binance/F0B90B' },
+      { name: 'Telegram', remoteIcon: 'https://cdn.simpleicons.org/telegram/26A5E4' },
+      { name: 'Docker', remoteIcon: 'https://cdn.simpleicons.org/docker/2496ED' },
+      { name: 'SQLite', remoteIcon: 'https://cdn.simpleicons.org/sqlite/003B57' },
     ],
   },
   {

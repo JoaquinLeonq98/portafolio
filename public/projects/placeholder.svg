@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" fill="none" role="img" aria-label="Vista previa del proyecto">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="55%" stop-color="#020617"/>
+      <stop offset="100%" stop-color="#0c1222"/>
+    </linearGradient>
+    <linearGradient id="glow" x1="50%" y1="0%" x2="50%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#8b5cf6" stop-opacity="0.08"/>
+    </linearGradient>
+    <linearGradient id="frame" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#a78bfa" stop-opacity="0.55"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="500" fill="url(#bg)"/>
+  <rect width="800" height="500" fill="url(#glow)"/>
+  <g stroke="#ffffff" stroke-opacity="0.04" stroke-width="1">
+    <path d="M0 62.5h800M0 125h800M0 187.5h800M0 250h800M0 312.5h800M0 375h800M0 437.5h800"/>
+    <path d="M62.5 0v500M125 0v500M187.5 0v500M250 0v500M312.5 0v500M375 0v500M437.5 0v500M500 0v500M562.5 0v500M625 0v500M687.5 0v500M750 0v500"/>
+  </g>
+  <rect x="220" y="130" width="360" height="240" rx="16" fill="#0b1220" stroke="url(#frame)" stroke-width="1.5"/>
+  <rect x="244" y="158" width="312" height="18" rx="4" fill="#1e293b"/>
+  <rect x="244" y="192" width="220" height="10" rx="3" fill="#334155" fill-opacity="0.7"/>
+  <rect x="244" y="214" width="260" height="10" rx="3" fill="#334155" fill-opacity="0.5"/>
+  <rect x="244" y="248" width="140" height="88" rx="8" fill="#1e293b" fill-opacity="0.85"/>
+  <rect x="402" y="248" width="154" height="40" rx="8" fill="#0ea5e9" fill-opacity="0.18" stroke="#38bdf8" stroke-opacity="0.35"/>
+  <rect x="402" y="296" width="154" height="40" rx="8" fill="#8b5cf6" fill-opacity="0.14" stroke="#a78bfa" stroke-opacity="0.3"/>
+  <circle cx="400" cy="88" r="28" fill="#0ea5e9" fill-opacity="0.12" stroke="#38bdf8" stroke-opacity="0.4"/>
+  <path d="M388 88l8 8 16-16" stroke="#7dd3fc" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="400" y="410" text-anchor="middle" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="15" font-weight="500" letter-spacing="0.08em">PROYECTO</text>
+</svg>
