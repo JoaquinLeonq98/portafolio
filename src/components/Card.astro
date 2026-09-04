@@ -1,19 +1,20 @@
 ---
 interface Props {
-	title: string;
-	body: string;
+  title: string;
+  body: string;
 }
 
 const { title, body } = Astro.props;
 ---
-<div class="flex  flex-col items-center justify-center gap-10  md:flex-row">
-	<div class="flex flex-col items-center rounded-xl  hover:shadow-xl hover:transform hover:scale-110 duration-200 pb-10 w-72 h-[218px] max-w-sm  bg-white border border-gray-200  shadow dark:bg-gray-900 dark:border-gray-800 ">
-		<h2 class="p-2 text-xl font-medium text-gray-900 dark:text-white">
-			<span>&rarr;</span>
-			{title}
-		</h2>
-		<p class="p-2 text-base text-gray-400 dark:text-gray-300">
-			{body}
-		</p>
-	</div>
+
+<div
+  class="service-card-animate flex h-full flex-col rounded-2xl border border-white/10 bg-white/[0.03] p-6 md:p-8"
+>
+  <h2 class="flex items-start gap-2 text-lg font-semibold tracking-tight text-white md:text-xl">
+    <span class="mt-1 text-sky-400" aria-hidden="true">→</span>
+    {title}
+  </h2>
+  <p class="mt-4 flex-1 text-sm leading-relaxed text-slate-400 md:text-base">
+    {body}
+  </p>
 </div>

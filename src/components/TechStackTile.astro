@@ -1,0 +1,55 @@
+---
+import { Image } from 'astro:assets';
+import type { TechStackItem } from '../data/techStack';
+import StackIcon from './icons/StackIcon.astro';
+
+interface Props {
+  item: TechStackItem;
+}
+
+const { item } = Astro.props;
+---
+
+<div
+  class="tech-tile-animate flex flex-col items-center rounded-xl border border-white/10 bg-white/[0.03] px-3 py-5 transition sm:px-4 sm:py-6"
+>
+  {
+    item.type === 'remote' ? (
+      <>
+        <img
+          src={item.src}
+          alt=""
+          class="tech-logo-mark h-10 w-10 object-contain transition-transform duration-300"
+          width="40"
+          height="40"
+          loading="lazy"
+          decoding="async"
+        />
+        <p class="mt-2 text-center text-[11px] font-medium leading-tight text-slate-300 sm:mt-3 sm:text-xs">
+          {item.label}
+        </p>
+      </>
+    ) : item.type === 'image' ? (
+      <>
+        <Image
+          class:list={['tech-logo-mark h-12 w-12 object-contain transition-transform duration-300 sm:h-14 sm:w-14', item.imgClass]}
+          src={item.src}
+          alt=""
+          loading="lazy"
+        />
+        <p class="mt-2 text-center text-[11px] font-medium leading-tight text-slate-300 sm:mt-3 sm:text-xs">
+          {item.label}
+        </p>
+      </>
+    ) : (
+      <>
+        <div class="flex h-12 w-12 items-center justify-center sm:h-14 sm:w-14">
+          <StackIcon id="astro" class="tech-logo-mark h-10 w-10 transition-transform duration-300 sm:h-12 sm:w-12" />
+        </div>
+        <p class="mt-2 text-center text-[11px] font-medium leading-tight text-slate-300 sm:mt-3 sm:text-xs">
+          {item.label}
+        </p>
+      </>
+    )
+  }
+</div>

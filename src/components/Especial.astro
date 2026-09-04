@@ -1,23 +1,22 @@
 ---
-import Card from  './Card.astro'
+import Card from './Card.astro';
 ---
 
-<div class='flex flex-col md:flex-row items-center justify-center gap-10'>
-
-            <Card 
-            title='Desarrollo de Software'
-             body='Desarrollo y soluciones Web, usando diferentes tecnlogías que resuelvan tu necesidad.'
-             />
-	        <Card 
-            title='Certificador de QA'
-            body='Realizo certificaciones de QA de proyectos en el giro bancario de implementaciones y desarrollos web y batch.'
-            />
-            <Card 
-            title='Soporte y seguridad'
-            body=' Gestiono la seguridad de equipos de cómputo, ádemas de brindar soporte técnico remoto y presencial.'
-            />
-            <Card 
-            title='Consultor TI'
-            body='Brindo asesoría para la automatización de procesos mediante el uso de las Tecnologías de la información, brindando un buen servicio al cliente con el manejo de varios presupuestos.'
-            />
+<div class="services-grid grid gap-6 sm:grid-cols-2">
+  <Card
+    title="Digitalizar tu negocio en la web"
+    body="Sitios y experiencias que venden, informan y captan contactos: mensaje claro, buena usabilidad en móvil y formularios que realmente convierten. Ideal para pymes que dan el salto digital o renuevan su presencia."
+  />
+  <Card
+    title="Software a la medida de tus procesos"
+    body="Cuando las hojas de cálculo ya no alcanzan: herramientas internas, paneles y flujos que ordenan inventarios, pedidos, citas o seguimiento de clientes. Te acompaño de la idea al despliegue, con entregas por etapas."
+  />
+  <Card
+    title="Calidad y rigor en entornos exigentes"
+    body="Trayectoria en sectores altamente regulados: pruebas exhaustivas, trazabilidad y cumplimiento de estándares de seguridad y operación. Pensado para equipos que no pueden permitirse fallos en producción ni sorpresas ante auditorías."
+  />
+  <Card
+    title="Freelance de confianza para equipos y reclutadores"
+    body="Puedo integrarme a tu equipo de producto o entregar proyectos cerrados con documentación y handover claros. Comunicación directa, estimaciones honestas y foco en el resultado que importa al negocio."
+  />
 </div>
