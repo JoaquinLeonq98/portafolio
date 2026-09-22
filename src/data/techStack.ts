@@ -13,6 +13,7 @@ import linux from '../assets/linux.png';
 export type TechStackItem =
   | { type: 'remote'; label: string; src: string }
   | { type: 'image'; label: string; src: ImageMetadata; imgClass?: string }
+  | { type: 'text'; label: string }
   | { type: 'icon'; label: string; icon: 'astro' };
 
 export const techStack: TechStackItem[] = [
@@ -32,6 +33,6 @@ export const techStack: TechStackItem[] = [
   { type: 'image', label: 'Linux', src: linux, imgClass: 'object-contain' },
   { type: 'remote', label: 'Cursor', src: 'https://cdn.simpleicons.org/cursor/ffffff' },
   { type: 'remote', label: 'GitHub Copilot', src: 'https://cdn.simpleicons.org/githubcopilot/ffffff' },
-  { type: 'remote', label: 'Anthropic', src: 'https://cdn.simpleicons.org/anthropic' },
-  { type: 'remote', label: 'OpenAI', src: 'https://cdn.simpleicons.org/openai' },
+  { type: 'remote', label: 'Anthropic', src: 'https://cdn.simpleicons.org/anthropic/ffffff' },
+  { type: 'text', label: 'OpenAI' },
 ];

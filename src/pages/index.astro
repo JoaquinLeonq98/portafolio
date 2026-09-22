@@ -11,27 +11,20 @@ import SectionHeading from '../components/SectionHeading.astro';
 ---
 
 <Layout title="Joaquín León Quero — Portafolio">
-  <main>
+  <main id="contenido" tabindex="-1">
     <Banner />
     <Projects />
 
-    <section class="scroll-mt-24 border-b border-white/5 py-20 md:py-28" id="sobre-mi">
-      <div class="mx-auto max-w-6xl px-4 sm:px-6">
-        <SectionHeading
-          eyebrow="Quién soy"
-          title="Sobre mí"
-          subtitle="Formación en Ingeniería en Gestión de TI (UVEG), más de cinco años en TI, proyectos en banca y producto digital, y uso de agentes de IA para acelerar el desarrollo sin sustituir el criterio técnico."
-        />
-        <div class="mx-auto max-w-3xl text-center">
-          <p class="text-lg leading-relaxed text-slate-400">
-            Llevo más de cinco años en TI, con experiencia en varios proyectos de banca y producto digital.
-            He usado de forma recurrente Angular, Nest, Node, Next, Astro, Flutter, Linux, Docker y nube,
-            entre otras herramientas, y sigo ampliando stack por curiosidad y por necesidad del proyecto.
-            Me importa empatizar con el equipo y dejar entregas claras para negocio y para quien mantenga
-            el código después. Uso agentes de IA en el flujo de trabajo (IDE, revisiones, pruebas de
-            ideas y documentación) para ganar productividad en el codeo; la decisión final y la calidad
-            siguen siendo responsabilidad consciente del equipo.
-          </p>
+    <section class="scroll-mt-24 border-b border-white/5 py-16 md:py-24" id="sobre-mi">
+      <div class="mx-auto max-w-6xl px-5 sm:px-6">
+        <div class="grid gap-8 lg:grid-cols-[1fr_1.2fr] lg:gap-16">
+          <SectionHeading title="Tecnología con contexto" eyebrow="Sobre mí"
+            subtitle="Entender el problema es parte de construir una buena solución." />
+          <div data-reveal-group class="space-y-5 text-base leading-8 text-slate-400">
+            <p>Soy ingeniero en Gestión de TI por la UVEG. Mi experiencia combina banca, desarrollo de producto y despliegue de aplicaciones. En COPARMEX participé en una app con Flutter, publicada en Play Store y App Store.</p>
+            <p>Me importa entender al negocio, colaborar con el equipo y dejar código que otra persona pueda mantener. Uso agentes de IA para explorar, revisar y documentar; las decisiones y la calidad pasan por revisión humana.</p>
+            <p>Trabajo con Angular, NestJS, Node, Next.js, Astro, Flutter, Linux, Docker y nube. Sigo aprendiendo según lo que cada proyecto necesita.</p>
+          </div>
         </div>
         <div class="mt-14">
           <Redes />
@@ -39,8 +32,8 @@ import SectionHeading from '../components/SectionHeading.astro';
       </div>
     </section>
 
-    <section class="scroll-mt-24 py-20 md:py-28" id="servicios">
-      <div class="mx-auto max-w-6xl px-4 sm:px-6">
+    <section class="scroll-mt-24 py-16 md:py-24" id="servicios">
+      <div class="mx-auto max-w-6xl px-5 sm:px-6">
         <SectionHeading
           eyebrow="Cómo puedo ayudarte"
           title="Servicios"
@@ -50,8 +43,8 @@ import SectionHeading from '../components/SectionHeading.astro';
       </div>
     </section>
 
-    <section class="scroll-mt-24 border-y border-white/5 bg-white/[0.02] py-20 md:py-28" id="stack">
-      <div class="mx-auto max-w-6xl px-4 sm:px-6">
+    <section class="scroll-mt-24 border-y border-white/5 bg-white/[0.02] py-16 md:py-24" id="stack">
+      <div class="mx-auto max-w-6xl px-5 sm:px-6">
         <SectionHeading
           eyebrow="Herramientas"
           title="Stack principal"
@@ -62,7 +55,7 @@ import SectionHeading from '../components/SectionHeading.astro';
     </section>
 
     <section class="scroll-mt-24 py-20 md:pb-12" id="contacto">
-      <div class="mx-auto max-w-6xl px-4 sm:px-6">
+      <div class="mx-auto max-w-6xl px-5 sm:px-6">
         <SectionHeading
           eyebrow="Hablemos"
           title="Contacto"

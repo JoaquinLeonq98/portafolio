@@ -7,7 +7,8 @@
   <nav class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-4 sm:px-6" aria-label="Principal">
     <a
       href="/#inicio"
-      class="text-sm font-semibold tracking-tight text-white transition hover:text-sky-400"
+      aria-label="Joaquín León Quero, inicio"
+      class="inline-flex min-h-11 items-center text-lg font-semibold tracking-tight text-white transition hover:text-sky-400"
     >
       JLQ<span class="text-sky-400">.</span>
     </a>
@@ -15,7 +16,7 @@
     <button
       type="button"
       id="nav-toggle"
-      class="inline-flex items-center justify-center rounded-lg border border-white/10 p-2 text-slate-300 md:hidden"
+      class="inline-flex items-center justify-center rounded-lg border border-white/10 min-h-11 min-w-11 p-2 text-slate-300 md:hidden"
       aria-expanded="false"
       aria-controls="nav-panel"
       aria-label="Abrir menú"
@@ -27,44 +28,75 @@
 
     <div
       id="nav-panel"
-      class="absolute left-0 right-0 top-full hidden flex-col gap-1 border-b border-white/5 bg-slate-950/95 px-4 py-4 shadow-lg backdrop-blur-md md:static md:flex md:flex-row md:items-center md:gap-1 md:border-0 md:bg-transparent md:p-0 md:shadow-none"
+      class="absolute flex left-0 right-0 top-full hidden flex-col gap-1 border-b border-white/5 bg-slate-950/95 px-4 py-4 shadow-lg backdrop-blur-md md:static md:flex md:flex-row md:items-center md:gap-1 md:border-0 md:bg-transparent md:p-0 md:shadow-none"
     >
       <a
-        class="rounded-lg px-3 py-2 text-sm text-slate-300 transition hover:bg-white/5 hover:text-white"
+        class="inline-flex min-h-11 items-center rounded-lg px-3 py-2 text-sm text-slate-300 transition hover:bg-white/5 hover:text-white"
         href="/#inicio">Inicio</a>
       <a
-        class="rounded-lg px-3 py-2 text-sm text-slate-300 transition hover:bg-white/5 hover:text-white"
+        class="inline-flex min-h-11 items-center rounded-lg px-3 py-2 text-sm text-slate-300 transition hover:bg-white/5 hover:text-white"
         href="/#proyectos">Proyectos</a>
       <a
-        class="rounded-lg px-3 py-2 text-sm text-slate-300 transition hover:bg-white/5 hover:text-white"
+        class="inline-flex min-h-11 items-center rounded-lg px-3 py-2 text-sm text-slate-300 transition hover:bg-white/5 hover:text-white"
         href="/#sobre-mi">Sobre mí</a>
       <a
-        class="rounded-lg px-3 py-2 text-sm text-slate-300 transition hover:bg-white/5 hover:text-white"
+        class="inline-flex min-h-11 items-center rounded-lg px-3 py-2 text-sm text-slate-300 transition hover:bg-white/5 hover:text-white"
         href="/#servicios">Servicios</a>
       <a
-        class="rounded-lg px-3 py-2 text-sm text-slate-300 transition hover:bg-white/5 hover:text-white"
+        class="inline-flex min-h-11 items-center rounded-lg px-3 py-2 text-sm text-slate-300 transition hover:bg-white/5 hover:text-white"
         href="/#stack">Stack</a>
       <a
-        class="rounded-lg px-3 py-2 text-sm font-medium text-sky-400 transition hover:bg-sky-500/10"
+        class="inline-flex min-h-11 items-center rounded-lg px-3 py-2 text-sm font-medium text-sky-400 transition hover:bg-sky-500/10"
         href="/#contacto">Contacto</a>
     </div>
   </nav>
 </header>
 
 <script>
+  import { gsap } from 'gsap';
+
   const toggle = document.getElementById('nav-toggle');
   const panel = document.getElementById('nav-panel');
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  let menuAnimation: gsap.core.Tween | undefined;
+
+  function clearMenuAnimation() {
+    menuAnimation?.kill();
+    if (panel) gsap.set(panel.children, { clearProps: 'opacity,transform,transition' });
+  }
+  reducedMotion.addEventListener('change', clearMenuAnimation);
+  window.matchMedia('(min-width: 768px)').addEventListener('change', clearMenuAnimation);
 
   toggle?.addEventListener('click', () => {
+    clearMenuAnimation();
     panel?.classList.toggle('hidden');
     const open = panel ? !panel.classList.contains('hidden') : false;
     toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
     toggle.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+    if (open && panel && !reducedMotion.matches) {
+      gsap.set(panel.children, { transition: 'none' });
+      menuAnimation = gsap.fromTo(panel.children, { y: -8, opacity: 0 }, {
+        y: 0, opacity: 1, duration: .3, stagger: .035, ease: 'power2.out', clearProps: 'opacity,transform,transition',
+      });
+    }
   });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && toggle?.getAttribute('aria-expanded') === 'true') {
+      clearMenuAnimation();
+      panel?.classList.add('hidden');
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.setAttribute('aria-label', 'Abrir menú');
+      toggle.focus();
+    }
+  });
+
+  panel?.addEventListener('focusin', clearMenuAnimation);
 
   panel?.querySelectorAll('a').forEach((link) => {
     link.addEventListener('click', () => {
       if (window.matchMedia('(max-width: 767px)').matches) {
+        clearMenuAnimation();
         panel.classList.add('hidden');
         toggle?.setAttribute('aria-expanded', 'false');
         toggle?.setAttribute('aria-label', 'Abrir menú');
@@ -72,3 +104,5 @@
     });
   });
 </script>
+
+<noscript><style>#nav-toggle{display:none}#nav-panel{display:flex;position:static;flex-wrap:wrap;flex-direction:row}header nav{flex-wrap:wrap}</style></noscript>

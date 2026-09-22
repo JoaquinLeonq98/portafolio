@@ -1,14 +1,21 @@
 import { defineConfig } from 'astro/config';
 
-import netlify from '@astrojs/netlify';
-import tailwind from '@astrojs/tailwind';
+import cloudflare from '@astrojs/cloudflare';
+import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
 export default defineConfig({
-  /** Netlify (Functions para /api/*). En local sigue siendo `npm run dev`. */
-  adapter: netlify(),
-  integrations: [tailwind()],
-  /** Solo `astro dev` / preview local. El servidor Node de producción usa el puerto que definas al arrancar (p. ej. PORT=3000). */
+  /** Sin sesiones: no aprovisiona un namespace KV al desplegar. */
+  session: false,
+  /**
+   * Cloudflare Workers. Las páginas se prerenderizan; solo `/api/contact` es on-demand.
+   * Las imágenes se optimizan en el build con Sharp (`compile` + prerender en Node).
+   */
+  adapter: cloudflare({
+    imageService: 'compile',
+    prerenderEnvironment: 'node',
+  }),
+  vite: { plugins: [tailwindcss()] },
   server: { port: 4321 },
   image: {
     remotePatterns: [

@@ -3,7 +3,7 @@ import { techStack } from '../data/techStack';
 import TechStackTile from './TechStackTile.astro';
 ---
 
-<div class="motion-tech-stagger grid grid-cols-3 gap-4 sm:grid-cols-4 sm:gap-5 lg:grid-cols-6 lg:gap-6">
+<div data-reveal-group class="motion-tech-stagger grid grid-cols-3 gap-4 sm:grid-cols-4 sm:gap-5 lg:grid-cols-6 lg:gap-6">
   {techStack.map((item) => (
     <TechStackTile item={item} />
   ))}

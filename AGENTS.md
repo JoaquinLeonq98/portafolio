@@ -1,6 +1,6 @@
 # Portafolio — contexto para agentes
 
-Sitio personal de **Joaquín León Quero** (Astro 6 + Tailwind + TypeScript, despliegue Netlify).
+Sitio personal de **Joaquín León Quero** (Astro 7 + Tailwind + TypeScript, despliegue Cloudflare Workers).
 
 ## Estructura relevante
 

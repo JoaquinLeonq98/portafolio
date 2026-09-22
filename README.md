@@ -1,54 +1,69 @@
-# Astro Starter Kit: Basics
+# Portafolio de Joaquín León Quero
+
+Sitio personal en español con Astro 7, Tailwind CSS 4 y TypeScript. Cloudflare Workers sirve las páginas estáticas y el endpoint `/api/contact`.
+
+## Desarrollo
+
+Usa Node.js 24. `.nvmrc` y `package.json` mantienen la misma versión principal. La instalación local con pnpm usa `pnpm-lock.yaml` y los overrides de `pnpm-workspace.yaml`; npm usa `package-lock.json` y los overrides de `package.json`. No alternes gestores sobre la misma carpeta `node_modules`.
 
 ```sh
-npm create astro@latest -- --template basics
+nvm use
+npm ci
+npm run dev
 ```
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/basics)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/basics/devcontainer.json)
+Abre http://localhost:4321. Antes de publicar:
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
-
-![just-the-basics](https://github.com/withastro/astro/assets/2244813/a0a5533c-a856-4198-8470-2d67b1d7c554)
-
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src/
-│   ├── components/
-│   │   └── Card.astro
-│   ├── layouts/
-│   │   └── Layout.astro
-│   └── pages/
-│       └── index.astro
-└── package.json
+```sh
+npm run build
+npm audit
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+El build ejecuta la comprobación de Astro y genera el Worker en `dist/`. La instalación rechaza versiones incompatibles de Node.
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+En local, el formulario lee secretos desde `.dev.vars` (no se commitea):
 
-Any static assets, like images, can be placed in the `public/` directory.
+```sh
+RESEND_API_KEY=
+CONTACT_TO_EMAIL=
+CONTACT_FROM_EMAIL=
+```
 
-## 🧞 Commands
+### Desarrollo con pnpm y mise
 
-All commands are run from the root of the project, from a terminal:
+```sh
+mise exec node@24 -- pnpm install --frozen-lockfile
+mise exec node@24 -- pnpm dev
+```
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+`astro dev` usa el runtime `workerd` de Cloudflare. Las imágenes de las páginas prerenderizadas se optimizan en el build con Sharp.
 
-## 👀 Want to learn more?
+## Cloudflare Workers
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+- Worker: `joaquinleon` (`wrangler.jsonc`).
+- Dominio: `joaquinleon.dev` (zona ya en Cloudflare).
+- Comando de build: `npm run build`.
+- Despliegue: `npm run deploy` (build y `wrangler deploy`).
+- Node en Workers Builds: `24` (el plan gratuito de Workers Builds ya cumple el mínimo de Astro; fija `NODE_VERSION=24` si el proyecto lo exige).
+- Instalar dependencias de desarrollo: son necesarias para Tailwind y `astro check`.
+
+El dominio ya está en Cloudflare, así que el Worker puede tomar `joaquinleon.dev` como dominio personalizado sin cambiar nameservers. Quita antes los registros DNS que apunten a Netlify.
+
+Secretos de runtime del Worker (no variables de build): `RESEND_API_KEY`, `CONTACT_TO_EMAIL` y `CONTACT_FROM_EMAIL`. El remitente debe estar autorizado en Resend. No guardes credenciales en Git. El sitio compila sin estas variables; el endpoint devuelve 503 si faltan.
+
+## Dependencias
+
+Se usa el plugin oficial `@tailwindcss/vite` para Tailwind 4. La integración antigua `@astrojs/tailwind` admite Astro 3–5 y se ha retirado para evitar una segunda instalación de Astro vulnerable.
+
+El override de `sharp` fija una versión corregida (0.35.4 o superior), porque `ipx@3` todavía solicita Sharp 0.34. Comprueba la optimización de imágenes y el build cuando cambie esa dependencia. Al actualizar dependencias, mantén sincronizados ambos lockfiles y los overrides de npm y pnpm.
+
+## Contenido
+
+- `src/data/projects.ts`: fuente única de proyectos, galerías y enlaces.
+- `src/components/ProjectCarousel.astro`: carrusel infinito con una fila en móvil y dos en pantallas amplias; incluye flechas, indicadores, teclado y arrastre táctil. Sin JavaScript permite desplazamiento horizontal nativo.
+- `src/components/Banner.astro`: presentación y descarga del CV.
+- `src/styles/global.css`: estilos base, foco de teclado y movimiento reducido.
+
+Las páginas mantienen contenido visible sin JavaScript. Menú, carrusel y formulario ofrecen estados accesibles; el envío del formulario requiere JavaScript.
+
+El carrusel excluye del foco las tarjetas fuera de vista y sus copias. GSAP anima la presentación en cada carga o recarga, el menú móvil y el desplazamiento del carrusel. ScrollTrigger revela encabezados, servicios, tecnologías, contacto y fichas al hacer scroll. Las animaciones y los hovers respetan `prefers-reduced-motion`; cambiar esa preferencia también detiene las animaciones activas.

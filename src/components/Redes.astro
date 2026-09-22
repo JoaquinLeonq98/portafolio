@@ -6,21 +6,21 @@ import Web from '../assets/sitio-web.png';
 import Tel from '../assets/whatsapp.png';
 ---
 
-<div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-  <div
-    class="flex flex-col items-center rounded-2xl border border-white/10 bg-white/[0.03] px-6 py-8 text-center transition hover:border-white/15"
+<div data-reveal-group class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+  <a href="mailto:joaquinleonquero00@gmail.com"
+    class="flex min-w-0 flex-col items-center rounded-2xl border border-white/10 bg-white/[0.03] px-6 py-8 text-center transition hover:border-white/15"
   >
     <Image class="h-9 w-9 py-1 opacity-90" src={Sobre} alt="" />
     <h3 class="mt-4 text-sm font-semibold text-white">Correo</h3>
-    <p class="mt-2 text-sm text-slate-400">joaquinleonquero00@gmail.com</p>
-  </div>
-  <div
-    class="flex flex-col items-center rounded-2xl border border-white/10 bg-white/[0.03] px-6 py-8 text-center transition hover:border-white/15"
+    <p class="mt-2 max-w-full break-all text-sm text-slate-400">joaquinleonquero00@gmail.com</p>
+  </a>
+  <a href="tel:+525545095380"
+    class="flex min-w-0 flex-col items-center rounded-2xl border border-white/10 bg-white/[0.03] px-6 py-8 text-center transition hover:border-white/15"
   >
     <Image class="h-9 w-9 py-1 opacity-90" src={Tel} alt="" />
     <h3 class="mt-4 text-sm font-semibold text-white">Teléfono</h3>
     <p class="mt-2 text-sm text-slate-400"><span class="font-medium text-slate-300">+52</span> 5545095380</p>
-  </div>
+  </a>
   <a
     href="https://github.com/JoaquinLeonq98"
     target="_blank"

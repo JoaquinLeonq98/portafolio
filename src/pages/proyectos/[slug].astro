@@ -29,9 +29,9 @@ function galleryFullSrc(item: (typeof gallery)[number]): string {
 ---
 
 <Layout title={`${project.title} — Joaquín León Quero`} description={project.excerpt}>
-  <main>
+  <main id="contenido" tabindex="-1">
     <article class="border-b border-white/5 py-16 md:py-24">
-      <div class="project-detail-inner mx-auto max-w-3xl px-4 sm:px-6">
+      <div data-reveal-group class="project-detail-inner mx-auto max-w-3xl px-4 sm:px-6">
         <p class="text-xs font-semibold uppercase tracking-wider text-sky-400/90">Proyecto</p>
         <div class="mt-2 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-4 sm:gap-y-2">
           <h1 class="text-3xl font-semibold tracking-tight text-white md:text-4xl">{project.title}</h1>
@@ -140,7 +140,7 @@ function galleryFullSrc(item: (typeof gallery)[number]): string {
 
       {
         gallery.length > 0 && galleryHero && (
-          <section
+          <section data-reveal
             class="project-gallery-section mx-auto mt-16 max-w-6xl px-4 sm:px-6"
             aria-labelledby="gallery-heading"
           >
@@ -224,7 +224,7 @@ function galleryFullSrc(item: (typeof gallery)[number]): string {
                             />
                           )}
                         </button>
-                        <figcaption class="line-clamp-2 border-t border-white/5 px-3 py-2.5 text-xs leading-snug text-slate-500">
+                        <figcaption class="line-clamp-2 border-t border-white/5 px-3 py-2.5 text-xs leading-snug text-slate-400">
                           {item.alt}
                         </figcaption>
                       </figure>
@@ -255,7 +255,7 @@ function galleryFullSrc(item: (typeof gallery)[number]): string {
                 </p>
                 <button
                   type="button"
-                  class="shrink-0 rounded-lg border border-white/15 bg-white/5 px-3 py-1.5 text-xs font-medium text-white transition hover:border-sky-500/40 hover:bg-white/10"
+                  class="shrink-0 rounded-lg border border-white/15 bg-white/5 min-h-11 px-3 py-1.5 text-sm font-medium text-white transition hover:border-sky-500/40 hover:bg-white/10"
                   data-close-project-gallery
                 >
                   Cerrar

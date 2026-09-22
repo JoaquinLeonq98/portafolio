@@ -1,4 +1,5 @@
 import type { APIRoute } from 'astro';
+import { env } from 'cloudflare:workers';
 import { Resend } from 'resend';
 import { ZodError } from 'zod';
 
@@ -7,7 +8,10 @@ import { allowContactSubmission } from '../../lib/rate-limit';
 
 export const prerender = false;
 
-function clientIp(request: Request): string {
+function clientIp(request: Request, clientAddress: string | undefined): string {
+  const cf = request.headers.get('cf-connecting-ip')?.trim();
+  if (cf) return cf;
+  if (clientAddress && clientAddress !== 'unknown') return clientAddress;
   const xf = request.headers.get('x-forwarded-for');
   if (xf) {
     const first = xf.split(',')[0]?.trim();
@@ -16,7 +20,18 @@ function clientIp(request: Request): string {
   return request.headers.get('x-real-ip')?.trim() || 'unknown';
 }
 
-export const POST: APIRoute = async ({ request }) => {
+function workerEnv(value: string | undefined): string {
+  return String(value ?? '').trim();
+}
+
+export const POST: APIRoute = async (context) => {
+  const { request } = context;
+  let clientAddress: string | undefined;
+  try {
+    clientAddress = context.clientAddress;
+  } catch {
+    clientAddress = undefined;
+  }
   if (request.headers.get('content-type')?.split(';')[0]?.trim() !== 'application/json') {
     return new Response(JSON.stringify({ ok: false, error: 'Content-Type inválido' }), {
       status: 415,
@@ -55,7 +70,7 @@ export const POST: APIRoute = async ({ request }) => {
     });
   }
 
-  const ip = clientIp(request);
+  const ip = clientIp(request, clientAddress);
   if (!allowContactSubmission(ip)) {
     return new Response(
       JSON.stringify({ ok: false, error: 'Demasiados envíos. Intenta más tarde.' }),
@@ -63,9 +78,9 @@ export const POST: APIRoute = async ({ request }) => {
     );
   }
 
-  const apiKey = String(import.meta.env.RESEND_API_KEY ?? '').trim();
-  const to = String(import.meta.env.CONTACT_TO_EMAIL ?? '').trim();
-  const from = String(import.meta.env.CONTACT_FROM_EMAIL ?? '').trim();
+  const apiKey = workerEnv(env.RESEND_API_KEY);
+  const to = workerEnv(env.CONTACT_TO_EMAIL);
+  const from = workerEnv(env.CONTACT_FROM_EMAIL);
 
   if (!apiKey || !to || !from) {
     return new Response(JSON.stringify({ ok: false, error: 'Contacto no configurado en el servidor.' }), {

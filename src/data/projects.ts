@@ -63,7 +63,7 @@ export const projects: ProjectEntry[] = [
     fullDescription: [
       'Sitio institucional que comunica servicios presenciales y en línea, con enfoque en terapia cognitivo-conductual.',
       'La agenda incluye un componente de calendario desarrollado desde cero con los estilos del sitio. Tras recopilar los datos de quien asistirá, el flujo consulta disponibilidad real y permite reservar sesiones de 50 minutos mediante la Google Calendar API, respetando los horarios definidos por la profesional y alineado a consentimiento informado y aviso de privacidad.',
-      'El sitio comparte la arquitectura base de este portafolio (Astro, Tailwind, despliegue en Netlify) y suma piezas propias del sector: preferencias de cookies, formulario de contacto con envío vía API y Resend, y la agenda integrada con Google Calendar.',
+      'El sitio comparte la arquitectura base de este portafolio (Astro y Tailwind) y suma piezas propias del sector: preferencias de cookies, formulario de contacto con envío vía API y Resend, y la agenda integrada con Google Calendar. Ese consultorio se despliega en Netlify.',
     ].join('\n\n'),
     techSheet: [
       'Astro y Tailwind: multipágina estática, rendimiento y mantenimiento sencillo',

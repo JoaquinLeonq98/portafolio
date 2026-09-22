@@ -1,0 +1,61 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Onest Variable', system-ui, sans-serif;
+  --color-slate-950: #020617;
+  --color-slate-900: #0f172a;
+  --color-slate-400: #94a3b8;
+  --color-sky-400: #38bdf8;
+  --color-violet-400: #a78bfa;
+}
+
+@layer base {
+  html { scroll-behavior: smooth; scroll-padding-top: 6rem; }
+  body { font-family: var(--font-sans); }
+  h1, h2, h3 { text-wrap: balance; }
+  p { text-wrap: pretty; }
+  button, a, input, textarea { -webkit-tap-highlight-color: transparent; }
+  button:not(:disabled), summary { cursor: pointer; }
+  :focus-visible { outline: 2px solid var(--color-sky-400); outline-offset: 5px; }
+  [hidden] { display: none !important; }
+}
+
+.skip-link {
+  position: fixed; top: .75rem; left: 1rem; z-index: 100;
+  padding: .8rem 1rem; border-radius: .5rem;
+  background: var(--color-sky-400); color: var(--color-slate-950);
+  transform: translateY(-150%);
+}
+.skip-link:focus { transform: translateY(0); }
+
+@layer components {
+  .button-primary, .button-secondary {
+    display: inline-flex; min-height: 48px; align-items: center; justify-content: center;
+    gap: .65rem; border-radius: .65rem; padding: .75rem 1.25rem;
+    font-size: .875rem; font-weight: 600;
+    transition: transform .22s, box-shadow .25s, background-color .2s, border-color .2s, color .2s;
+  }
+  .button-primary { background: var(--color-sky-400); color: var(--color-slate-950); }
+  .button-primary:hover { background: #7dd3fc; }
+  .button-secondary { border: 1px solid #334155; color: #e2e8f0; }
+  .button-secondary:hover { background: var(--color-slate-900); border-color: var(--color-slate-400); }
+  .service-card-animate, .tech-tile-animate { transition: transform .3s cubic-bezier(.22, 1, .36, 1), box-shadow .3s, border-color .2s, background-color .2s; }
+  .service-card-animate:hover, .tech-tile-animate:hover { border-color: #38bdf850; background-color: #0f172a; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { scroll-behavior: auto !important; animation: none !important; transition: none !important; }
+}
+
+@media (prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine) {
+  .button-primary:hover, .button-secondary:hover { transform: translateY(-3px); }
+  .button-primary:hover { box-shadow: 0 8px 26px -10px #38bdf8aa; }
+  .button-secondary:hover { box-shadow: 0 8px 24px -12px #a78bfa77; }
+  .button-primary:active, .button-secondary:active { transform: translateY(0) scale(.98); }
+  .button-primary svg, .button-secondary svg { transition: transform .25s; }
+  .button-primary:hover svg, .button-secondary:hover svg { transform: translateY(2px); }
+  .service-card-animate:hover { transform: translateY(-4px); box-shadow: 0 14px 28px -22px #a78bfa66; }
+  .tech-tile-animate:hover { transform: translateY(-4px); box-shadow: 0 10px 24px -18px #38bdf877; }
+  .tech-tile-animate:hover .tech-logo-mark { transform: scale(1.1); }
+}

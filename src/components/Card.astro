@@ -10,10 +10,9 @@ const { title, body } = Astro.props;
 <div
   class="service-card-animate flex h-full flex-col rounded-2xl border border-white/10 bg-white/[0.03] p-6 md:p-8"
 >
-  <h2 class="flex items-start gap-2 text-lg font-semibold tracking-tight text-white md:text-xl">
-    <span class="mt-1 text-sky-400" aria-hidden="true">→</span>
+  <h3 class="flex items-start gap-2 text-lg font-semibold tracking-tight text-white md:text-xl">
     {title}
-  </h2>
+  </h3>
   <p class="mt-4 flex-1 text-sm leading-relaxed text-slate-400 md:text-base">
     {body}
   </p>
