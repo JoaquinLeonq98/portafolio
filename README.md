@@ -40,7 +40,7 @@ mise exec node@24 -- pnpm dev
 
 ## Cloudflare Workers
 
-- Worker: `joaquinleon` (`wrangler.jsonc`).
+- Worker: `portafolio` (`wrangler.jsonc`). El dominio `joaquinleon.dev` está ligado a ese Worker.
 - Dominio: `joaquinleon.dev` (zona ya en Cloudflare).
 - Comando de build: `npm run build`.
 - Despliegue: `npm run deploy` (build y `wrangler deploy`).
