@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-hidden="true">
+  <title>Playwright</title>
+  <path fill="#2EAD33" d="M4.2 6.4 12 3.2l7.8 3.2v8.1c0 3.4-3.3 6.3-7.8 7.5-4.5-1.2-7.8-4.1-7.8-7.5z"/>
+  <path fill="#D4F5D6" d="M8.1 10.2c.9 0 1.6-.8 1.6-1.7S9 6.8 8.1 6.8s-1.7.8-1.7 1.7.8 1.7 1.7 1.7zm7.8 0c.9 0 1.6-.8 1.6-1.7s-.7-1.7-1.6-1.7-1.7.8-1.7 1.7.8 1.7 1.7 1.7z"/>
+  <path fill="#14532d" d="M8.6 14.8c.9 1.2 2.1 1.8 3.4 1.8s2.5-.6 3.4-1.8" stroke="#14532d" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+</svg>

@@ -1,44 +1,44 @@
 ---
-import { Image } from 'astro:assets';
-import GitHub from '../assets/github.png';
-import Sobre from '../assets/sobre.png';
-import Web from '../assets/sitio-web.png';
-import Tel from '../assets/whatsapp.png';
+const channels = [
+  {
+    label: 'Correo',
+    value: 'joaquinleonquero00@gmail.com',
+    href: 'mailto:joaquinleonquero00@gmail.com',
+    icon: 'mail',
+  },
+  { label: 'Teléfono', value: '+52 55 4509 5380', href: 'tel:+525545095380', icon: 'phone' },
+  { label: 'LinkedIn', value: 'joaquinlq', href: 'https://www.linkedin.com/in/joaquinlq/', icon: 'linkedin', external: true },
+  { label: 'GitHub', value: 'JoaquinLeonq98', href: 'https://github.com/JoaquinLeonq98', icon: 'github', external: true },
+  { label: 'Tridot', value: 'tridotmx.com', href: 'https://tridotmx.com/', icon: 'globe', external: true },
+] as const;
 ---
 
-<div data-reveal-group class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-  <a href="mailto:joaquinleonquero00@gmail.com"
-    class="flex min-w-0 flex-col items-center rounded-2xl border border-white/10 bg-white/[0.03] px-6 py-8 text-center transition hover:border-white/15"
-  >
-    <Image class="h-9 w-9 py-1 opacity-90" src={Sobre} alt="" />
-    <h3 class="mt-4 text-sm font-semibold text-white">Correo</h3>
-    <p class="mt-2 max-w-full break-all text-sm text-slate-400">joaquinleonquero00@gmail.com</p>
-  </a>
-  <a href="tel:+525545095380"
-    class="flex min-w-0 flex-col items-center rounded-2xl border border-white/10 bg-white/[0.03] px-6 py-8 text-center transition hover:border-white/15"
-  >
-    <Image class="h-9 w-9 py-1 opacity-90" src={Tel} alt="" />
-    <h3 class="mt-4 text-sm font-semibold text-white">Teléfono</h3>
-    <p class="mt-2 text-sm text-slate-400"><span class="font-medium text-slate-300">+52</span> 5545095380</p>
-  </a>
-  <a
-    href="https://github.com/JoaquinLeonq98"
-    target="_blank"
-    rel="noopener noreferrer"
-    class="flex flex-col items-center rounded-2xl border border-white/10 bg-white/[0.03] px-6 py-8 text-center transition hover:border-sky-500/30 hover:bg-white/[0.05]"
-  >
-    <Image class="h-9 w-9 py-1 opacity-90" src={GitHub} alt="" />
-    <h3 class="mt-4 text-sm font-semibold text-white">GitHub</h3>
-    <p class="mt-2 text-sm text-slate-400">JoaquinLeonq98</p>
-  </a>
-  <a
-    href="https://v0-tridot.vercel.app/"
-    target="_blank"
-    rel="noopener noreferrer"
-    class="flex flex-col items-center rounded-2xl border border-white/10 bg-white/[0.03] px-6 py-8 text-center transition hover:border-sky-500/30 hover:bg-white/[0.05]"
-  >
-    <Image class="h-9 w-9 py-1 opacity-90" src={Web} alt="" />
-    <h3 class="mt-4 text-sm font-semibold text-white">Sitio web</h3>
-    <p class="mt-2 text-sm text-slate-400">Tridot</p>
-  </a>
-</div>
+<ul data-reveal-group class="border-t border-line">
+  {channels.map((channel) => (
+    <li class="border-b border-line">
+      <a
+        href={channel.href}
+        class="channel group grid min-h-16 grid-cols-[1.75rem_6.5rem_1fr_auto] items-center gap-x-3 py-3 sm:grid-cols-[1.75rem_8rem_1fr_auto]"
+        {...('external' in channel ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+      >
+        <svg class="h-5 w-5 text-muted transition group-hover:text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          {channel.icon === 'mail' && <><rect x="3" y="5" width="18" height="14" rx="2" /><path d="m4 7 8 6 8-6" /></>}
+          {channel.icon === 'phone' && <path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2" />}
+          {channel.icon === 'linkedin' && <><path d="M7.2 9.6H4V19.2h3.2V9.6ZM5.6 8a1.6 1.6 0 1 0 0-3.2 1.6 1.6 0 0 0 0 3.2ZM20 13.6V19.2h-3.2v-5.6c0-.8-.6-1.6-1.6-1.6s-1.6.8-1.6 1.6v5.6H10.4v-5.6c0-2.2 1.6-3.8 3.6-3.8 1 .4 2.4 1.2 2.8 2.2V9.6H20v4Z" fill="currentColor" stroke="none" /></>}
+          {channel.icon === 'github' && <path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21" />}
+          {channel.icon === 'globe' && <><circle cx="12" cy="12" r="9" /><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18" /></>}
+        </svg>
+        <span class="text-sm text-muted">{channel.label}</span>
+        <span class="channel-value min-w-0 truncate text-base font-medium text-ink">{channel.value}</span>
+        <span class="channel-arrow text-muted" aria-hidden="true">{'external' in channel ? '↗' : '→'}</span>
+      </a>
+    </li>
+  ))}
+</ul>
+
+<style>
+  .channel-value { text-decoration-line: underline; text-decoration-color: transparent; text-underline-offset: 5px; transition: color .2s, text-decoration-color .2s; }
+  .channel:hover .channel-value, .channel:focus-visible .channel-value { color: var(--accent); text-decoration-color: currentColor; }
+  .channel-arrow { transition: transform .25s cubic-bezier(.22, 1, .36, 1), color .2s; }
+  .channel:hover .channel-arrow { color: var(--accent); transform: translateX(3px); }
+</style>

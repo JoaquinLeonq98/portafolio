@@ -1,25 +1,21 @@
 ---
-import { Image } from 'astro:assets';
-import JoaquinPerfil from '../assets/JoaquinPerfil.jpg';
-const cvFile = 'CV-JOAQUÍN LEÓN QUERO.docx.pdf';
-const cvHref = `/${encodeURIComponent(cvFile)}`;
+import { projects } from '../data/projects';
+
+const cvFile = 'CV_Joaquin_Leon_2026_ES.pdf';
+const cvHref = `/${cvFile}`;
 ---
-<section id="inicio" class="relative scroll-mt-24 overflow-hidden border-b border-white/10" aria-labelledby="hero-title">
-  <div class="hero-layout mx-auto grid max-w-6xl items-center gap-12 px-5 py-14 sm:px-6 md:py-20 lg:gap-20">
-    <div data-hero-copy>
-      <p class="mb-7 flex items-center gap-2.5 text-sm text-sky-300">
-        <span class="h-2 w-2 shrink-0 rounded-full bg-sky-400" aria-hidden="true"></span>
-        Disponible para proyectos y colaboraciones
-      </p>
-      <h1 id="hero-title" class="text-[clamp(2.6rem,5vw,4.5rem)] leading-[1.06] font-semibold tracking-[-0.055em] text-white">
-        Joaquín<br />León Quero<span class="text-sky-400">.</span>
+<section id="inicio" class="scroll-mt-24 border-b border-line" aria-labelledby="hero-title">
+  <div class="title-spread mx-auto grid max-w-7xl px-5 sm:px-8">
+    <div data-hero-copy class="title-page flex flex-col justify-center py-14 md:py-20 lg:pr-16">
+      <h1 id="hero-title" class="text-[clamp(2.75rem,6.4vw,5.75rem)] font-semibold leading-[.98] tracking-[-0.035em] text-ink">
+        Joaquín<br />León Quero<span class="text-accent">.</span>
       </h1>
-      <p class="mt-5 text-lg font-medium text-slate-200 sm:text-xl">Ingeniero en Gestión de TI &amp; Full-stack</p>
-      <p class="mt-5 max-w-lg text-base leading-7 text-slate-400 sm:text-lg sm:leading-8">
-        Desarrollo productos web, conecto sistemas y los llevo a producción.
-        Más de cinco años en TI, con experiencia en banca y producto digital.
+      <p class="mt-6 text-lg font-medium text-ink sm:text-xl">Desarrollador full-stack · Automatización con agentes de IA</p>
+      <p class="mt-4 max-w-[46ch] text-base leading-7 text-muted sm:text-lg sm:leading-8">
+        NestJS, Next.js, Node.js y TypeScript. Cofundador de Tridot México.
+        Plataformas a medida, banca y automatización con revisión humana.
       </p>
-      <div class="mt-8 flex flex-wrap gap-3">
+      <div class="mt-9 flex flex-wrap gap-3">
         <a href="#proyectos" class="button-primary">Explorar proyectos
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M12 5v14m-6-6 6 6 6-6" /></svg>
         </a>
@@ -27,27 +23,56 @@ const cvHref = `/${encodeURIComponent(cvFile)}`;
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M12 3v12m-4-4 4 4 4-4M5 16v4h14v-4" /></svg>
         </a>
       </div>
-      <a href="#contacto" class="mt-4 inline-flex min-h-11 items-center text-sm text-slate-400 underline-offset-4 hover:text-sky-300 hover:underline">¿Tienes un proyecto? Hablemos.</a>
+      <p class="mt-7 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-muted">
+        <span class="inline-flex items-center gap-2">
+          <span class="h-2 w-2 shrink-0 rounded-full bg-accent" aria-hidden="true"></span>
+          Disponible para proyectos y colaboraciones
+        </span>
+        <a href="#contacto" class="link-ink inline-flex min-h-11 items-center">¿Tienes un proyecto? Hablemos.</a>
+      </p>
     </div>
-    <figure data-hero-portrait class="portrait relative mx-auto w-full max-w-sm lg:justify-self-end">
-      <div class="overflow-hidden rounded-t-[6rem] rounded-b-2xl border border-white/10 bg-slate-900">
-        <Image src={JoaquinPerfil} alt="Joaquín León Quero" class="aspect-[4/4.5] w-full object-cover object-top"
-          widths={[320, 480, 768]} sizes="(max-width: 640px) 85vw, 384px" loading="eager" fetchpriority="high" />
-        <figcaption class="flex items-center justify-between gap-4 border-t border-white/10 px-6 py-5">
-          <div><p class="text-sm font-medium text-white">Querétaro, México</p><p class="mt-1 text-xs text-slate-400">Cofundador de Tridot México</p></div>
-          <svg class="text-violet-400" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M20 10c0 6-8 11-8 11S4 16 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg>
-        </figcaption>
-      </div>
-    </figure>
+
+    <nav class="index-page py-10 md:py-20 lg:pl-16" aria-labelledby="indice-heading">
+      <h2 id="indice-heading" class="text-base font-semibold text-ink">Índice de obras</h2>
+      <ol class="mt-5 border-t border-line">
+        {projects.map((project, index) => (
+          <li class="border-b border-line">
+            <a href={`#obra-${project.slug}`} class="index-row group grid min-h-14 grid-cols-[2.25rem_1fr_auto] items-baseline gap-x-3 py-3.5">
+              <span class="text-sm text-folio">{String(index + 1).padStart(2, '0')}</span>
+              <span class="min-w-0">
+                <span class="index-title block text-[1.0625rem] font-medium leading-snug text-ink">{project.title}</span>
+                <span class="mt-0.5 block text-sm text-muted">{project.kind}</span>
+              </span>
+              {project.inDevelopment ? (
+                <span class="flex items-center gap-1.5 text-xs font-medium text-pending">
+                  <span class="h-1.5 w-1.5 rounded-full bg-pending" aria-hidden="true"></span>
+                  <span class="hidden sm:inline">En desarrollo</span>
+                  <span class="sr-only sm:hidden">En desarrollo</span>
+                </span>
+              ) : (
+                <span class="index-arrow text-muted" aria-hidden="true">↓</span>
+              )}
+            </a>
+          </li>
+        ))}
+      </ol>
+    </nav>
   </div>
-  <div data-reveal-group class="mx-auto grid max-w-6xl gap-5 border-t border-white/10 px-5 py-6 sm:grid-cols-3 sm:px-6">
-    <p class="text-sm text-slate-400"><span class="mb-1 block font-medium text-slate-200">Producto completo</span>Web, backend y despliegue</p>
-    <p class="text-sm text-slate-400"><span class="mb-1 block font-medium text-slate-200">Experiencia en banca</span>Calidad y procesos exigentes</p>
-    <p class="text-sm text-slate-400"><span class="mb-1 block font-medium text-slate-200">Colaboración directa</span>Español nativo e inglés técnico B1</p>
+
+  <div data-reveal-group class="colophon mx-auto grid max-w-7xl gap-5 border-t border-line px-5 py-6 sm:grid-cols-3 sm:px-8">
+    <p class="text-sm text-muted"><span class="mb-1 block font-medium text-ink">Producto completo</span>Web, backend y despliegue</p>
+    <p class="text-sm text-muted"><span class="mb-1 block font-medium text-ink">Experiencia en banca</span>Calidad y procesos exigentes</p>
+    <p class="text-sm text-muted"><span class="mb-1 block font-medium text-ink">Colaboración directa</span>Español nativo e inglés técnico B1</p>
   </div>
 </section>
+
 <style>
-  #inicio { background: radial-gradient(ellipse at 85% 25%, #312e811f, transparent 55%); }
-  @media (min-width: 768px) { .hero-layout { grid-template-columns: 1.35fr 1fr; } }
-  @media (max-width: 767px) { .portrait { max-width: 20rem; } }
+  @media (min-width: 1024px) {
+    .title-spread { grid-template-columns: 1.1fr 1fr; }
+    .index-page { border-left: 1px solid var(--line); display: flex; flex-direction: column; justify-content: center; }
+  }
+  .index-title { text-decoration-line: underline; text-decoration-color: transparent; text-underline-offset: 5px; transition: color .2s, text-decoration-color .2s; }
+  .index-row:hover .index-title, .index-row:focus-visible .index-title { color: var(--accent); text-decoration-color: currentColor; }
+  .index-arrow { transition: transform .25s cubic-bezier(.22, 1, .36, 1), color .2s; }
+  .index-row:hover .index-arrow { color: var(--accent); transform: translateY(3px); }
 </style>

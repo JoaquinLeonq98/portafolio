@@ -8,3 +8,8 @@ export type ProjectTech =
 export function isRemoteTech(t: ProjectTech): t is { name: string; remoteIcon: string } {
   return 'remoteIcon' in t;
 }
+
+/** Logos de Simple Icons pedidos en blanco: necesitan invertirse en el tema claro. */
+export function isMonochromeIcon(src: string): boolean {
+  return /\/ffffff$/i.test(src);
+}

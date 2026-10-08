@@ -1,0 +1,46 @@
+---
+import type { ProjectTech } from '../data/projectTech';
+import { isMonochromeIcon, isRemoteTech } from '../data/projectTech';
+import StackIcon from './icons/StackIcon.astro';
+
+interface Props {
+  tech: ProjectTech[];
+  /** Máximo de pills visibles; el resto se resume en «+N». */
+  max?: number;
+  class?: string;
+}
+
+const { tech, max, class: className } = Astro.props;
+const visible = max ? tech.slice(0, max) : tech;
+const hidden = tech.slice(visible.length);
+---
+
+<ul class:list={['flex flex-wrap gap-1.5', className]} aria-label="Tecnologías utilizadas">
+  {visible.map((t) => (
+    <li class="inline-flex items-center gap-1.5 rounded-full border border-line bg-surface px-2.5 py-1 text-xs font-medium text-ink">
+      {isRemoteTech(t) ? (
+        <img
+          src={t.remoteIcon}
+          alt=""
+          class:list={['h-3.5 w-3.5 object-contain', isMonochromeIcon(t.remoteIcon) && 'icon-mono']}
+          width="14"
+          height="14"
+          loading="lazy"
+          decoding="async"
+        />
+      ) : (
+        <StackIcon id={t.icon} class="h-3.5 w-3.5 shrink-0" />
+      )}
+      {t.name}
+    </li>
+  ))}
+  {hidden.length > 0 && (
+    <li
+      class="inline-flex items-center rounded-full border border-dashed border-line-strong px-2.5 py-1 text-xs font-medium text-muted"
+      title={hidden.map((t) => t.name).join(', ')}
+    >
+      +{hidden.length}
+      <span class="sr-only">: {hidden.map((t) => t.name).join(', ')}</span>
+    </li>
+  )}
+</ul>

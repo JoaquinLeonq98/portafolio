@@ -1,22 +1,29 @@
 ---
-import Card from './Card.astro';
+const services = [
+  {
+    title: 'Digitalizar tu negocio en la web',
+    body: 'Sitios y experiencias que venden, informan y captan contactos: mensaje claro, buena usabilidad en móvil y formularios que realmente convierten. Ideal para pymes que dan el salto digital o renuevan su presencia.',
+  },
+  {
+    title: 'Software a la medida de tus procesos',
+    body: 'Cuando las hojas de cálculo ya no alcanzan: herramientas internas, paneles y flujos que ordenan inventarios, pedidos, citas o seguimiento de clientes. Te acompaño de la idea al despliegue, con entregas por etapas.',
+  },
+  {
+    title: 'Calidad y rigor en entornos exigentes',
+    body: 'Trayectoria en sectores altamente regulados: pruebas exhaustivas, trazabilidad y cumplimiento de estándares de seguridad y operación. Pensado para equipos que no pueden permitirse fallos en producción ni sorpresas ante auditorías.',
+  },
+  {
+    title: 'Freelance de confianza para equipos y reclutadores',
+    body: 'Puedo integrarme a tu equipo de producto o entregar proyectos cerrados con documentación y handover claros. Comunicación directa, estimaciones honestas y foco en el resultado que importa al negocio.',
+  },
+];
 ---
 
-<div data-reveal-group class="services-grid grid gap-6 sm:grid-cols-2">
-  <Card
-    title="Digitalizar tu negocio en la web"
-    body="Sitios y experiencias que venden, informan y captan contactos: mensaje claro, buena usabilidad en móvil y formularios que realmente convierten. Ideal para pymes que dan el salto digital o renuevan su presencia."
-  />
-  <Card
-    title="Software a la medida de tus procesos"
-    body="Cuando las hojas de cálculo ya no alcanzan: herramientas internas, paneles y flujos que ordenan inventarios, pedidos, citas o seguimiento de clientes. Te acompaño de la idea al despliegue, con entregas por etapas."
-  />
-  <Card
-    title="Calidad y rigor en entornos exigentes"
-    body="Trayectoria en sectores altamente regulados: pruebas exhaustivas, trazabilidad y cumplimiento de estándares de seguridad y operación. Pensado para equipos que no pueden permitirse fallos en producción ni sorpresas ante auditorías."
-  />
-  <Card
-    title="Freelance de confianza para equipos y reclutadores"
-    body="Puedo integrarme a tu equipo de producto o entregar proyectos cerrados con documentación y handover claros. Comunicación directa, estimaciones honestas y foco en el resultado que importa al negocio."
-  />
-</div>
+<ul data-reveal-group class="grid border-t border-line md:grid-cols-2">
+  {services.map((service, index) => (
+    <li class:list={['service border-b border-line py-8 md:py-10', index % 2 === 0 ? 'md:pr-12 md:border-r' : 'md:pl-12']}>
+      <h3 class="text-xl font-semibold tracking-[-0.02em] text-ink md:text-2xl">{service.title}</h3>
+      <p class="mt-4 max-w-[58ch] text-base leading-7 text-muted">{service.body}</p>
+    </li>
+  ))}
+</ul>

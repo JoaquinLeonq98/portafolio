@@ -9,4 +9,5 @@ export type StackIconId =
   | 'brevo'
   | 'netlify'
   | 'cobol'
-  | 'jcl';
+  | 'jcl'
+  | 'aws';

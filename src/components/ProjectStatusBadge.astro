@@ -1,0 +1,30 @@
+---
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<span class:list={['inline-flex w-fit items-center gap-2 text-sm font-medium text-pending', className]}>
+  <span class="status-dot relative flex h-1.5 w-1.5" aria-hidden="true">
+    <span class="absolute inset-0 rounded-full bg-pending"></span>
+  </span>
+  En desarrollo
+</span>
+
+<style>
+  @media (prefers-reduced-motion: no-preference) {
+    .status-dot::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 9999px;
+      background: var(--pending);
+      animation: status-ping 2.4s cubic-bezier(0, 0, 0.2, 1) infinite;
+    }
+  }
+  @keyframes status-ping {
+    75%, 100% { transform: scale(2.6); opacity: 0; }
+  }
+</style>

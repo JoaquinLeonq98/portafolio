@@ -1,4 +1,5 @@
 ---
+import { Image } from 'astro:assets';
 import Layout from '../layouts/Layout.astro';
 import Redes from '../components/Redes.astro';
 import Especial from '../components/Especial.astro';
@@ -7,35 +8,57 @@ import Banner from '../components/Banner.astro';
 import Form from '../components/Form.astro';
 import Footer from '../components/Footer.astro';
 import Projects from '../components/Projects.astro';
+import Experience from '../components/Experience.astro';
 import SectionHeading from '../components/SectionHeading.astro';
+import JoaquinPerfil from '../assets/JoaquinPerfil.jpg';
 ---
 
-<Layout title="Joaquín León Quero — Portafolio">
+<Layout
+  title="Joaquín León Quero — Portafolio"
+  description="Joaquín León Quero. Desarrollador full-stack en Querétaro (NestJS, Next.js, Node.js, TypeScript) y cofundador de Tridot México. Automatización con agentes de IA, banca y producto a medida."
+>
   <main id="contenido" tabindex="-1">
     <Banner />
     <Projects />
+    <Experience />
 
-    <section class="scroll-mt-24 border-b border-white/5 py-16 md:py-24" id="sobre-mi">
-      <div class="mx-auto max-w-6xl px-5 sm:px-6">
-        <div class="grid gap-8 lg:grid-cols-[1fr_1.2fr] lg:gap-16">
-          <SectionHeading title="Tecnología con contexto" eyebrow="Sobre mí"
-            subtitle="Entender el problema es parte de construir una buena solución." />
-          <div data-reveal-group class="space-y-5 text-base leading-8 text-slate-400">
-            <p>Soy ingeniero en Gestión de TI por la UVEG. Mi experiencia combina banca, desarrollo de producto y despliegue de aplicaciones. En COPARMEX participé en una app con Flutter, publicada en Play Store y App Store.</p>
-            <p>Me importa entender al negocio, colaborar con el equipo y dejar código que otra persona pueda mantener. Uso agentes de IA para explorar, revisar y documentar; las decisiones y la calidad pasan por revisión humana.</p>
-            <p>Trabajo con Angular, NestJS, Node, Next.js, Astro, Flutter, Linux, Docker y nube. Sigo aprendiendo según lo que cada proyecto necesita.</p>
+    <section class="scroll-mt-24 py-16 md:py-24" id="sobre-mi" aria-labelledby="sobre-mi-heading">
+      <div class="mx-auto grid max-w-7xl gap-12 px-5 sm:px-8 lg:grid-cols-12 lg:gap-0">
+        <figure data-reveal class="lg:col-span-5 lg:border-r lg:border-line lg:pr-14">
+          <div data-plate class="overflow-hidden rounded-[6px] border border-line bg-surface">
+            <Image src={JoaquinPerfil} alt="Joaquín León Quero" class="aspect-[4/4.6] w-full object-cover object-top"
+              widths={[360, 540, 760]} sizes="(min-width: 1024px) 34vw, 92vw" loading="lazy" />
           </div>
-        </div>
-        <div class="mt-14">
-          <Redes />
+          <figcaption class="mt-3 flex flex-wrap gap-x-2 text-sm text-muted">
+            <span class="text-folio">Querétaro, México</span>
+            <span aria-hidden="true">·</span>
+            <span>Cofundador de Tridot México</span>
+          </figcaption>
+        </figure>
+
+        <div class="lg:col-span-7 lg:pl-14">
+          <h2 id="sobre-mi-heading" data-reveal class="text-[clamp(2rem,4.2vw,3.5rem)] font-semibold leading-[1.04] tracking-[-0.03em] text-ink">
+            Producto a medida, con revisión humana
+          </h2>
+          <p data-reveal class="mt-5 text-lg leading-8 text-ink sm:text-xl">
+            Ingeniero en Gestión de TI. Más de cinco años en tecnología y más de tres como desarrollador full-stack.
+          </p>
+          <div data-reveal-group class="mt-8 max-w-[62ch] space-y-5 text-base leading-8 text-muted">
+            <p>Cofundé Tridot México para construir plataformas y productos SaaS para empresas mexicanas. Integro agentes de IA en el desarrollo y la operación —orquestación multiagente, conectores MCP, pruebas E2E y rutinas programadas— y las decisiones pasan por revisión humana.</p>
+            <p>Antes trabajé en banca: COBOL y mainframe para AML en BBVA, y certificación QA de Base24 EPS y PCI en NCS. Esa exigencia de trazabilidad y cumplimiento la llevo a cada entrega.</p>
+            <p>Disponible para proyectos freelance o por contrato, remotos y en español. El CV completo se descarga desde el inicio.</p>
+          </div>
+          <div class="mt-12">
+            <Redes />
+          </div>
         </div>
       </div>
     </section>
 
-    <section class="scroll-mt-24 py-16 md:py-24" id="servicios">
-      <div class="mx-auto max-w-6xl px-5 sm:px-6">
+    <section class="scroll-mt-24 border-t border-line py-16 md:py-24" id="servicios" aria-labelledby="servicios-heading">
+      <div class="mx-auto max-w-7xl px-5 sm:px-8">
         <SectionHeading
-          eyebrow="Cómo puedo ayudarte"
+          id="servicios-heading"
           title="Servicios"
           subtitle="Enfoque en negocio y resultados: digitalización, producto a medida y acompañamiento. El detalle técnico lo ves en cada proyecto."
         />
@@ -43,10 +66,10 @@ import SectionHeading from '../components/SectionHeading.astro';
       </div>
     </section>
 
-    <section class="scroll-mt-24 border-y border-white/5 bg-white/[0.02] py-16 md:py-24" id="stack">
-      <div class="mx-auto max-w-6xl px-5 sm:px-6">
+    <section class="scroll-mt-24 border-t border-line bg-surface py-16 md:py-24" id="stack" aria-labelledby="stack-heading">
+      <div class="mx-auto max-w-7xl px-5 sm:px-8">
         <SectionHeading
-          eyebrow="Herramientas"
+          id="stack-heading"
           title="Stack principal"
           subtitle="Tecnologías que uso con frecuencia en producto, backend y despliegue."
         />
@@ -54,10 +77,10 @@ import SectionHeading from '../components/SectionHeading.astro';
       </div>
     </section>
 
-    <section class="scroll-mt-24 py-20 md:pb-12" id="contacto">
-      <div class="mx-auto max-w-6xl px-5 sm:px-6">
+    <section class="scroll-mt-24 border-t border-line pt-16 md:pt-24" id="contacto" aria-labelledby="contacto-heading">
+      <div class="mx-auto max-w-7xl px-5 sm:px-8">
         <SectionHeading
-          eyebrow="Hablemos"
+          id="contacto-heading"
           title="Contacto"
           subtitle="Cuéntame tu idea, tu equipo o tu reto técnico. Respondo con propuesta y siguientes pasos."
         />

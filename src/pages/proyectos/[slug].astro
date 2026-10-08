@@ -2,6 +2,8 @@
 import { Image } from 'astro:assets';
 import Layout from '../../layouts/Layout.astro';
 import Footer from '../../components/Footer.astro';
+import ProjectStatusBadge from '../../components/ProjectStatusBadge.astro';
+import TechPills from '../../components/TechPills.astro';
 import { getProjectBySlug, projects } from '../../data/projects';
 
 export function getStaticPaths() {
@@ -22,6 +24,12 @@ const galleryRest = gallery.slice(1);
 const visitHref = project.href?.trim();
 const docPdf = project.documentationPdfHref?.trim();
 const demoVideoHref = project.demoVideoHref?.trim();
+const upcoming = project.upcoming ?? [];
+
+const projectIndex = projects.indexOf(project);
+const folio = String(projectIndex + 1).padStart(2, '0');
+const prevProject = projects[(projectIndex - 1 + projects.length) % projects.length];
+const nextProject = projects[(projectIndex + 1) % projects.length];
 
 function galleryFullSrc(item: (typeof gallery)[number]): string {
   return 'image' in item ? item.image.src : item.src;
@@ -30,261 +38,227 @@ function galleryFullSrc(item: (typeof gallery)[number]): string {
 
 <Layout title={`${project.title} — Joaquín León Quero`} description={project.excerpt}>
   <main id="contenido" tabindex="-1">
-    <article class="border-b border-white/5 py-16 md:py-24">
-      <div data-reveal-group class="project-detail-inner mx-auto max-w-3xl px-4 sm:px-6">
-        <p class="text-xs font-semibold uppercase tracking-wider text-sky-400/90">Proyecto</p>
-        <div class="mt-2 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-4 sm:gap-y-2">
-          <h1 class="text-3xl font-semibold tracking-tight text-white md:text-4xl">{project.title}</h1>
-          {
-            project.inDevelopment && (
-              <span
-                class="w-fit rounded-md border border-[#1e3d32]/55 bg-[#2d4a3e] px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wider text-[#e8f4ec]"
-                role="status"
-              >
-                En desarrollo
-              </span>
-            )
-          }
-        </div>
+    <article class="pb-16 pt-8 md:pb-24 md:pt-12">
+      <div data-reveal-group class="mx-auto max-w-7xl px-5 sm:px-8">
+        <nav aria-label="Ruta de navegación" class="text-sm text-muted">
+          <ol class="flex min-w-0 items-center gap-2">
+            <li><a href="/" class="link-ink text-muted">Inicio</a></li>
+            <li aria-hidden="true" class="text-faint">/</li>
+            <li><a href="/#proyectos" class="link-ink text-muted">Proyectos</a></li>
+            <li aria-hidden="true" class="text-faint">/</li>
+            <li aria-current="page" class="min-w-0 truncate text-ink">{project.title}</li>
+          </ol>
+        </nav>
 
-        <div class="mt-8 flex flex-wrap gap-3">
-          {
-            visitHref && (
-              <a
-                href={visitHref}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="inline-flex items-center gap-2 rounded-xl bg-sky-500 px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-sky-400"
-              >
-                Visitar sitio
-                <span aria-hidden="true">↗</span>
-              </a>
-            )
-          }
-          {
-            docPdf && (
-              <a
-                href={docPdf}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="inline-flex items-center gap-2 rounded-xl border border-violet-400/35 bg-violet-500/15 px-5 py-3 text-sm font-semibold text-violet-100 transition hover:border-violet-400/55 hover:bg-violet-500/25"
-              >
-                Documentación (PDF)
-                <span aria-hidden="true">↗</span>
-              </a>
-            )
-          }
-          <a
-            href="/#proyectos"
-            class="inline-flex items-center gap-2 rounded-xl border border-white/15 px-5 py-3 text-sm font-medium text-slate-200 transition hover:border-sky-500/40 hover:text-white"
-          >
-            ← Volver a proyectos
-          </a>
-        </div>
-
-        {
-          project.confidentialityNote && (
-            <aside
-              class="mt-8 rounded-xl border border-amber-500/25 bg-amber-500/10 px-4 py-3 text-sm leading-relaxed text-amber-100/95"
-              role="note"
-            >
-              <span class="font-semibold text-amber-200">Aviso: </span>
-              {project.confidentialityNote}
-            </aside>
-          )
-        }
-
-        <div class="mt-10 space-y-5">
-          {paragraphs.map((block) => (
-            <p class="text-base leading-relaxed text-slate-400">{block}</p>
-          ))}
-        </div>
-
-        <section class="mt-12" aria-labelledby="tech-sheet-heading">
-          <h2 id="tech-sheet-heading" class="text-lg font-semibold text-white">
-            Ficha técnica
-          </h2>
-          <ul class="mt-4 list-disc space-y-2 pl-5 text-slate-400">
-            {project.techSheet.map((line) => (
-              <li class="leading-relaxed">{line}</li>
-            ))}
-          </ul>
-        </section>
-
-        {
-          demoVideoHref && (
-            <section class="mt-12" aria-labelledby="demo-video-heading">
-              <h2 id="demo-video-heading" class="text-lg font-semibold text-white">
-                Vídeo demostrativo
-              </h2>
-              <p class="mt-2 text-sm leading-relaxed text-slate-400">
-                Por la complejidad de infraestructura, la demo no siempre está desplegada públicamente. Si hay un vídeo
-                disponible, lo enlazo aquí.
+        <header class="mt-10 grid gap-x-16 gap-y-6 border-b border-line pb-12 md:mt-14 lg:grid-cols-[minmax(0,1.1fr)_1fr] lg:items-end">
+          <div class="grid grid-cols-[3rem_1fr] gap-x-3 sm:grid-cols-[4.5rem_1fr]">
+            <span class="pt-2 text-3xl font-light leading-none text-folio sm:text-5xl" aria-hidden="true">{folio}</span>
+            <div class="min-w-0">
+              <h1 class="text-[clamp(2rem,4.6vw,4rem)] font-semibold leading-[1.04] tracking-[-0.03em] text-ink">
+                {project.title}
+              </h1>
+              <p class="mt-4 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-muted">
+                <span>{project.kind}</span>
+                {project.inDevelopment && <ProjectStatusBadge />}
               </p>
-              <div class="mt-4">
-                <a
-                  href={demoVideoHref}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-slate-100 transition hover:border-sky-500/40 hover:bg-white/10"
-                >
-                  Ver vídeo
-                  <span aria-hidden="true">↗</span>
-                </a>
+            </div>
+          </div>
+          <div>
+            <p class="max-w-[52ch] text-lg leading-8 text-muted">{project.excerpt}</p>
+            {(visitHref || docPdf) && (
+              <div class="mt-7 flex flex-wrap gap-3">
+                {visitHref && (
+                  <a href={visitHref} target="_blank" rel="noopener noreferrer" class="button-primary">
+                    Visitar sitio <span aria-hidden="true">↗</span>
+                    <span class="sr-only">(se abre en otra pestaña)</span>
+                  </a>
+                )}
+                {docPdf && (
+                  <a href={docPdf} target="_blank" rel="noopener noreferrer" class="button-secondary">
+                    Documentación (PDF) <span aria-hidden="true">↗</span>
+                  </a>
+                )}
               </div>
-            </section>
-          )
-        }
+            )}
+          </div>
+        </header>
 
+        <div class="grid gap-12 pt-12 lg:grid-cols-12 lg:gap-0">
+          <div class="min-w-0 lg:col-span-8 lg:border-r lg:border-line lg:pr-14">
+            {project.confidentialityNote && (
+              <aside class="mb-10 flex max-w-[68ch] gap-3 border-y border-line py-4 text-sm leading-relaxed text-muted" role="note">
+                <svg class="mt-0.5 h-4 w-4 shrink-0 text-pending" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                  <rect x="5" y="11" width="14" height="10" rx="2" />
+                  <path d="M8 11V7a4 4 0 0 1 8 0v4" stroke-linecap="round" />
+                </svg>
+                <p>{project.confidentialityNote}</p>
+              </aside>
+            )}
+
+            <div class="max-w-[68ch] space-y-5">
+              {paragraphs.map((block) => (
+                <p class="text-base leading-8 text-muted">{block}</p>
+              ))}
+            </div>
+
+            <section class="mt-14 max-w-[68ch]" aria-labelledby="tech-sheet-heading">
+              <h2 id="tech-sheet-heading" class="text-xl font-semibold tracking-[-0.02em] text-ink">Ficha técnica</h2>
+              <ul class="mt-5 border-t border-line">
+                {project.techSheet.map((line) => (
+                  <li class="flex gap-3 border-b border-line py-3.5 leading-relaxed text-ink">
+                    <span class="mt-[0.65rem] h-1 w-3 shrink-0 bg-accent" aria-hidden="true" />
+                    <span>{line}</span>
+                  </li>
+                ))}
+              </ul>
+            </section>
+
+            {upcoming.length > 0 && (
+              <section class="mt-14 max-w-[68ch]" aria-labelledby="upcoming-heading">
+                <h2 id="upcoming-heading" class="flex items-center gap-3 text-xl font-semibold tracking-[-0.02em] text-ink">
+                  Próximamente
+                  <span class="h-1.5 w-1.5 rounded-full bg-pending" aria-hidden="true" />
+                </h2>
+                <ul class="mt-5 space-y-4">
+                  {upcoming.map((item) => (
+                    <li class="border-l-[1px] border-line-strong pl-5 leading-relaxed text-muted">{item}</li>
+                  ))}
+                </ul>
+              </section>
+            )}
+
+            {demoVideoHref && (
+              <section class="mt-14 max-w-[68ch]" aria-labelledby="demo-video-heading">
+                <h2 id="demo-video-heading" class="text-xl font-semibold tracking-[-0.02em] text-ink">Vídeo demostrativo</h2>
+                <p class="mt-2 text-sm leading-relaxed text-muted">
+                  Por la complejidad de infraestructura, la demo no siempre está desplegada públicamente. Si hay un vídeo
+                  disponible, lo enlazo aquí.
+                </p>
+                <a href={demoVideoHref} target="_blank" rel="noopener noreferrer" class="button-secondary mt-4">
+                  Ver vídeo <span aria-hidden="true">↗</span>
+                </a>
+              </section>
+            )}
+          </div>
+
+          <aside class="self-start lg:sticky lg:top-24 lg:col-span-4 lg:pl-14" aria-label="Resumen del proyecto">
+            <dl class="divide-y divide-line border-y border-line">
+              <div class="py-5">
+                <dt class="text-sm text-muted">Estado</dt>
+                <dd class="mt-1.5 flex items-center gap-2 font-medium text-ink">
+                  <span class:list={['h-2 w-2 rounded-full', project.inDevelopment ? 'bg-pending' : 'bg-accent']} aria-hidden="true" />
+                  {project.inDevelopment ? 'En desarrollo' : 'Terminado'}
+                </dd>
+              </div>
+              <div class="py-5">
+                <dt class="text-sm text-muted">Tipo</dt>
+                <dd class="mt-1.5 font-medium text-ink">{project.kind}</dd>
+              </div>
+              <div class="py-5">
+                <dt class="text-sm text-muted">Stack</dt>
+                <dd class="mt-3">
+                  {project.tech.length > 0 ? (
+                    <TechPills tech={project.tech} />
+                  ) : (
+                    <p class="text-sm text-muted">Se publicará al lanzar el proyecto.</p>
+                  )}
+                </dd>
+              </div>
+            </dl>
+          </aside>
+        </div>
       </div>
 
-      {
-        gallery.length > 0 && galleryHero && (
-          <section data-reveal
-            class="project-gallery-section mx-auto mt-16 max-w-6xl px-4 sm:px-6"
-            aria-labelledby="gallery-heading"
-          >
-            <h2 id="gallery-heading" class="text-xl font-semibold tracking-tight text-white md:text-2xl">
-              Galería
-            </h2>
+      {gallery.length > 0 && galleryHero && (
+        <section data-reveal class="mx-auto mt-20 max-w-7xl px-5 sm:px-8" aria-labelledby="gallery-heading">
+          <h2 id="gallery-heading" class="border-t border-line pt-10 text-[clamp(1.5rem,2.6vw,2.25rem)] font-semibold tracking-[-0.025em] text-ink">
+            Láminas
+          </h2>
 
-            <div class="mt-6 space-y-5 md:space-y-6">
-              <figure
-                class="group relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-slate-900 via-slate-950 to-slate-900 shadow-[0_20px_50px_-20px_rgba(0,0,0,0.85)] ring-1 ring-white/[0.06]"
-              >
-                <button
-                  type="button"
-                  class="relative block w-full cursor-zoom-in text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500/70"
-                  data-project-gallery-open
-                  data-full-src={galleryFullSrc(galleryHero)}
-                  data-alt={galleryHero.alt}
-                  aria-label={galleryHero.alt}
-                >
-                  <div class="flex max-h-[min(72vh,640px)] min-h-[200px] items-center justify-center p-3 sm:p-5 md:p-8">
-                    {'image' in galleryHero ? (
-                      <Image
-                        src={galleryHero.image}
-                        alt={galleryHero.alt}
-                        class="max-h-[min(68vh,600px)] w-full object-contain object-center transition duration-300 group-hover:scale-[1.01]"
-                        loading="eager"
-                        decoding="async"
-                        quality={90}
-                      />
-                    ) : (
-                      <img
-                        src={galleryHero.src}
-                        alt={galleryHero.alt}
-                        width={1200}
-                        height={720}
-                        class="max-h-[min(68vh,600px)] w-full object-contain object-center transition duration-300 group-hover:scale-[1.01]"
-                        loading="eager"
-                        decoding="async"
-                      />
-                    )}
-                  </div>
-                </button>
-                <figcaption class="border-t border-white/5 px-4 py-3 text-sm text-slate-400 sm:px-5">
-                  {galleryHero.alt}
-                </figcaption>
-              </figure>
-
-              {
-                galleryRest.length > 0 && (
-                  <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-5">
-                    {galleryRest.map((item) => (
-                      <figure
-                        class="group flex flex-col overflow-hidden rounded-xl border border-white/10 bg-gradient-to-b from-slate-900/90 to-slate-950 shadow-lg ring-1 ring-white/[0.04] transition hover:border-sky-500/25 hover:ring-sky-500/15"
-                      >
-                        <button
-                          type="button"
-                          class="relative aspect-[4/3] w-full cursor-zoom-in overflow-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500/70"
-                          data-project-gallery-open
-                          data-full-src={galleryFullSrc(item)}
-                          data-alt={item.alt}
-                          aria-label={item.alt}
-                        >
-                          {'image' in item ? (
-                            <Image
-                              src={item.image}
-                              alt={item.alt}
-                              class="h-full w-full object-contain object-center p-2 transition duration-300 group-hover:scale-[1.02]"
-                              loading="lazy"
-                              decoding="async"
-                              quality={88}
-                            />
-                          ) : (
-                            <img
-                              src={item.src}
-                              alt={item.alt}
-                              width={800}
-                              height={600}
-                              class="h-full w-full object-contain object-center p-2 transition duration-300 group-hover:scale-[1.02]"
-                              loading="lazy"
-                              decoding="async"
-                            />
-                          )}
-                        </button>
-                        <figcaption class="line-clamp-2 border-t border-white/5 px-3 py-2.5 text-xs leading-snug text-slate-400">
-                          {item.alt}
-                        </figcaption>
-                      </figure>
-                    ))}
-                  </div>
-                )
-              }
-            </div>
-          </section>
-        )
-      }
-
-      {
-        gallery.length > 0 && (
-          <dialog
-            id="project-gallery-lightbox"
-            class="w-[min(96vw,1200px)] max-w-none border-0 bg-transparent p-0 [&::backdrop]:bg-slate-950/85"
-            aria-labelledby="project-gallery-lightbox-title"
-          >
-            <div
-              class="overflow-hidden rounded-2xl border border-white/10 bg-slate-950 shadow-2xl ring-1 ring-white/10"
+          <figure class="mt-8">
+            <button
+              type="button"
+              class="group block w-full cursor-zoom-in overflow-hidden rounded-[6px] border border-line bg-surface"
+              data-project-gallery-open
+              data-full-src={galleryFullSrc(galleryHero)}
+              data-alt={galleryHero.alt}
+              aria-label={`Ampliar: ${galleryHero.alt}`}
             >
-              <div class="flex items-start justify-between gap-3 border-b border-white/10 px-4 py-3 sm:px-5">
-                <p
-                  id="project-gallery-lightbox-title"
-                  class="min-w-0 flex-1 text-sm leading-snug text-slate-200"
-                >
-                </p>
-                <button
-                  type="button"
-                  class="shrink-0 rounded-lg border border-white/15 bg-white/5 min-h-11 px-3 py-1.5 text-sm font-medium text-white transition hover:border-sky-500/40 hover:bg-white/10"
-                  data-close-project-gallery
-                >
-                  Cerrar
-                </button>
-              </div>
-              <div class="max-h-[min(85vh,900px)] overflow-auto p-3 sm:p-5">
-                <img
-                  id="project-gallery-lightbox-img"
-                  class="mx-auto h-auto max-h-[min(78vh,820px)] w-full max-w-full object-contain"
-                  alt=""
-                  width="1200"
-                  height="800"
-                />
-              </div>
-            </div>
-          </dialog>
-        )
-      }
-    </article>
-    {
-      gallery.length > 0 && (
-        <script is:inline>
-          (function () {
-            var dlg = document.getElementById('project-gallery-lightbox');
-            var img = document.getElementById('project-gallery-lightbox-img');
-            var cap = document.getElementById('project-gallery-lightbox-title');
-            if (!dlg || !img || !cap) return;
+              <span class="flex max-h-[min(74vh,680px)] min-h-[200px] items-center justify-center p-3 sm:p-6">
+                {'image' in galleryHero ? (
+                  <Image src={galleryHero.image} alt={galleryHero.alt} class="max-h-[min(70vh,640px)] w-full object-contain transition duration-500 group-hover:scale-[1.01]" loading="eager" quality={90} />
+                ) : (
+                  <img src={galleryHero.src} alt={galleryHero.alt} width={1200} height={720} class="max-h-[min(70vh,640px)] w-full object-contain transition duration-500 group-hover:scale-[1.01]" loading="eager" decoding="async" />
+                )}
+              </span>
+            </button>
+            <figcaption class="mt-3 flex gap-2 text-sm text-muted">
+              <span class="text-folio">Lámina {folio}.1</span>
+              <span aria-hidden="true">·</span>
+              <span>{galleryHero.alt}</span>
+            </figcaption>
+          </figure>
 
-            function openFrom(btn) {
+          {galleryRest.length > 0 && (
+            <div class="mt-10 grid gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+              {galleryRest.map((item, index) => (
+                <figure>
+                  <button
+                    type="button"
+                    class="group block aspect-[4/3] w-full cursor-zoom-in overflow-hidden rounded-[6px] border border-line bg-surface"
+                    data-project-gallery-open
+                    data-full-src={galleryFullSrc(item)}
+                    data-alt={item.alt}
+                    aria-label={`Ampliar: ${item.alt}`}
+                  >
+                    {'image' in item ? (
+                      <Image src={item.image} alt={item.alt} class="h-full w-full object-contain p-2 transition duration-500 group-hover:scale-[1.02]" loading="lazy" quality={88} />
+                    ) : (
+                      <img src={item.src} alt={item.alt} width={800} height={600} class="h-full w-full object-contain p-2 transition duration-500 group-hover:scale-[1.02]" loading="lazy" decoding="async" />
+                    )}
+                  </button>
+                  <figcaption class="mt-3 flex gap-2 text-sm leading-snug text-muted">
+                    <span class="shrink-0 text-folio">{folio}.{index + 2}</span>
+                    <span class="line-clamp-2">{item.alt}</span>
+                  </figcaption>
+                </figure>
+              ))}
+            </div>
+          )}
+        </section>
+      )}
+
+      {gallery.length > 0 && (
+        <dialog
+          id="project-gallery-lightbox"
+          class="m-auto w-[min(96vw,1200px)] max-w-none border-0 bg-transparent p-0 backdrop:bg-black/80"
+          aria-labelledby="project-gallery-lightbox-title"
+        >
+          <div class="overflow-hidden rounded-[6px] border border-line bg-paper">
+            <div class="flex items-start justify-between gap-3 border-b border-line px-4 py-3 sm:px-5">
+              <p id="project-gallery-lightbox-title" class="min-w-0 flex-1 text-sm leading-snug text-ink"></p>
+              <button type="button" class="button-secondary min-h-11 shrink-0 px-3 py-1.5" data-close-project-gallery>
+                Cerrar
+              </button>
+            </div>
+            <div class="max-h-[min(85vh,900px)] overflow-auto p-3 sm:p-5">
+              <img id="project-gallery-lightbox-img" class="mx-auto h-auto max-h-[min(78vh,820px)] w-full max-w-full object-contain" alt="" width="1200" height="800" />
+            </div>
+          </div>
+        </dialog>
+      )}
+    </article>
+
+    {gallery.length > 0 && (
+      <script is:inline>
+        (function () {
+          var dlg = document.getElementById('project-gallery-lightbox');
+          var img = document.getElementById('project-gallery-lightbox-img');
+          var cap = document.getElementById('project-gallery-lightbox-title');
+          if (!dlg || !img || !cap) return;
+
+          document.querySelectorAll('[data-project-gallery-open]').forEach(function (btn) {
+            btn.addEventListener('click', function () {
               var src = btn.getAttribute('data-full-src');
               var alt = btn.getAttribute('data-alt') || '';
               if (!src) return;
@@ -292,31 +266,42 @@ function galleryFullSrc(item: (typeof gallery)[number]): string {
               img.alt = alt;
               cap.textContent = alt;
               if (typeof dlg.showModal === 'function') dlg.showModal();
-            }
-
-            document.querySelectorAll('[data-project-gallery-open]').forEach(function (btn) {
-              btn.addEventListener('click', function () {
-                openFrom(btn);
-              });
             });
+          });
 
-            var closeBtn = document.querySelector('[data-close-project-gallery]');
-            if (closeBtn)
-              closeBtn.addEventListener('click', function () {
-                dlg.close();
-              });
+          var closeBtn = document.querySelector('[data-close-project-gallery]');
+          if (closeBtn) closeBtn.addEventListener('click', function () { dlg.close(); });
+          dlg.addEventListener('click', function (e) { if (e.target === dlg) dlg.close(); });
+          dlg.addEventListener('close', function () { img.removeAttribute('src'); });
+        })();
+      </script>
+    )}
 
-            dlg.addEventListener('click', function (e) {
-              if (e.target === dlg) dlg.close();
-            });
-
-            dlg.addEventListener('close', function () {
-              img.removeAttribute('src');
-            });
-          })();
-        </script>
-      )
-    }
+    <nav data-reveal aria-label="Más proyectos" class="mx-auto max-w-7xl px-5 sm:px-8">
+      <div class="grid border-y border-line sm:grid-cols-2">
+        <a href={`/proyectos/${prevProject.slug}`} class="project-pager group border-b border-line py-6 sm:border-b-0 sm:border-r sm:pr-8">
+          <span class="text-sm text-muted"><span class="pager-arrow inline-block" aria-hidden="true">←</span> Anterior</span>
+          <span class="pager-title mt-1.5 block text-lg font-semibold tracking-[-0.015em] text-ink">{prevProject.title}</span>
+        </a>
+        <a href={`/proyectos/${nextProject.slug}`} class="project-pager group py-6 sm:pl-8 sm:text-right">
+          <span class="text-sm text-muted">Siguiente <span class="pager-arrow pager-arrow-next inline-block" aria-hidden="true">→</span></span>
+          <span class="pager-title mt-1.5 block text-lg font-semibold tracking-[-0.015em] text-ink">{nextProject.title}</span>
+        </a>
+      </div>
+      <p class="mt-8 text-center">
+        <a href="/#proyectos" class="link-ink text-sm">Ver todos los proyectos</a>
+      </p>
+    </nav>
     <Footer />
   </main>
 </Layout>
+
+<style>
+  .pager-title { text-decoration-line: underline; text-decoration-color: transparent; text-underline-offset: 6px; transition: color .2s, text-decoration-color .2s; }
+  .project-pager:hover .pager-title, .project-pager:focus-visible .pager-title { color: var(--accent); text-decoration-color: currentColor; }
+  @media (prefers-reduced-motion: no-preference) {
+    .pager-arrow { transition: transform .25s cubic-bezier(.22, 1, .36, 1); }
+    .project-pager:hover .pager-arrow { transform: translateX(-4px); }
+    .project-pager:hover .pager-arrow-next { transform: translateX(4px); }
+  }
+</style>

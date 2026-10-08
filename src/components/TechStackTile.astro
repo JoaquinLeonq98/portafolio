@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import type { TechStackItem } from '../data/techStack';
+import { isMonochromeIcon } from '../data/projectTech';
 import StackIcon from './icons/StackIcon.astro';
 
 interface Props {
@@ -10,50 +11,34 @@ interface Props {
 const { item } = Astro.props;
 ---
 
-<div
-  class="tech-tile-animate flex flex-col items-center rounded-xl border border-white/10 bg-white/[0.03] px-3 py-5 transition sm:px-4 sm:py-6"
->
-  {
-    item.type === 'remote' ? (
-      <>
-        <img
-          src={item.src}
-          alt=""
-          class="tech-logo-mark h-10 w-10 object-contain transition-transform duration-300"
-          width="40"
-          height="40"
-          loading="lazy"
-          decoding="async"
-        />
-        <p class="mt-2 text-center text-xs font-medium leading-tight text-slate-300 sm:mt-3 sm:text-xs">
-          {item.label}
-        </p>
-      </>
+<li class="tech-cell flex min-h-28 flex-col justify-between gap-4 bg-paper p-4 sm:p-5">
+  <div class="flex h-9 items-center">
+    {item.type === 'remote' ? (
+      <img
+        src={item.src}
+        alt=""
+        class:list={['tech-mark h-8 w-8 object-contain', isMonochromeIcon(item.src) && 'icon-mono']}
+        width="32"
+        height="32"
+        loading="lazy"
+        decoding="async"
+      />
     ) : item.type === 'image' ? (
-      <>
-        <Image
-          class:list={['tech-logo-mark h-12 w-12 object-contain transition-transform duration-300 sm:h-14 sm:w-14', item.imgClass]}
-          src={item.src}
-          alt=""
-          loading="lazy"
-        />
-        <p class="mt-2 text-center text-xs font-medium leading-tight text-slate-300 sm:mt-3 sm:text-xs">
-          {item.label}
-        </p>
-      </>
-    ) : item.type === 'text' ? (
-      <p class="flex min-h-20 items-center justify-center text-base font-semibold text-slate-200 sm:min-h-24">
-        {item.label}
-      </p>
+      <Image class:list={['tech-mark h-9 w-9 object-contain', item.imgClass]} src={item.src} alt="" loading="lazy" />
+    ) : item.type === 'icon' ? (
+      <StackIcon id={item.icon} class="tech-mark h-8 w-8 text-ink" />
     ) : (
-      <>
-        <div class="flex h-12 w-12 items-center justify-center sm:h-14 sm:w-14">
-          <StackIcon id="astro" class="tech-logo-mark h-10 w-10 transition-transform duration-300 sm:h-12 sm:w-12" />
-        </div>
-        <p class="mt-2 text-center text-xs font-medium leading-tight text-slate-300 sm:mt-3 sm:text-xs">
-          {item.label}
-        </p>
-      </>
-    )
+      <span class="text-lg font-semibold tracking-tight text-ink" aria-hidden="true">{item.label}</span>
+    )}
+  </div>
+  <p class:list={['text-sm font-medium text-ink', item.type === 'text' && 'sr-only']}>{item.label}</p>
+</li>
+
+<style>
+  .tech-cell { transition: background-color .25s; }
+  .tech-cell:hover { background: var(--surface); }
+  .tech-mark { transition: transform .35s cubic-bezier(.22, 1, .36, 1), filter .2s; }
+  @media (prefers-reduced-motion: no-preference) and (hover: hover) {
+    .tech-cell:hover .tech-mark { transform: translateY(-2px) scale(1.06); }
   }
-</div>
+</style>

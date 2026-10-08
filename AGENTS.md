@@ -7,13 +7,13 @@ Sitio personal de **Joaquín León Quero** (Astro 7 + Tailwind + TypeScript, des
 | Ruta | Uso |
 |------|-----|
 | `src/data/projects.ts` | **Fuente única** de proyectos (no hay CMS ni JSON externo) |
+| `src/data/experience.ts` | Trayectoria, formación e idiomas (alineados al CV) |
 | `src/data/projectTech.ts` | Tipos de tecnologías en tarjetas |
-| `src/data/projectDefaults.ts` | Imagen placeholder cuando un proyecto no tiene preview |
-| `src/components/ProjectCard.astro` | Tarjeta del carrusel |
-| `src/components/ProjectCarousel.astro` | Carrusel infinito en home |
+| `src/components/ProjectSpread.astro` | Lámina de cada proyecto en home |
 | `src/pages/proyectos/[slug].astro` | Ficha detalle por slug |
 | `src/assets/projects/` | Capturas locales (import en `projects.ts`) |
 | `public/projects/` | Previews estáticos y placeholder |
+| `public/CV_Joaquin_Leon_2026_ES.pdf` | CV descargable (fuente de verdad del perfil) |
 
 ## Cómo añadir o editar un proyecto
 
@@ -28,28 +28,23 @@ Sitio personal de **Joaquín León Quero** (Astro 7 + Tailwind + TypeScript, des
 
 ### Consultorio Psicoterapéutico (`sulem-rodriguez-psicoterapeuta`)
 - **Estado:** terminado.
-- Landing + sitio institucional (TCC). Agenda con **componente de calendario propio** (estilos del sitio) integrado con **Google Calendar API** para reservar citas en horarios del cliente.
-- Stack: Astro, Tailwind, Resend, Google Calendar API, Netlify.
-- URL: https://sulem-rodriguez-psicoterapia.netlify.app/
+- Agenda propia + Google Calendar. Dominio: https://psicologia-sulem.com/
 
-### Punto de venta (`punto-de-venta`) — en desarrollo
-- POS con subtotales, totales, descuentos y catálogo de productos.
-- NestJS (API) + Next.js (front) + PostgreSQL + TypeORM + Docker (DB).
+### Portal NCS (`portal-ncs`) — en producción
+- Control de horas. Próximo módulo: evidencias Word por lote desde matriz Excel (especificación lista). URL privada: https://portal.ncs.com.mx
 
-### Cash Tracker (`cash-tracker`) — en desarrollo
-- SaaS de seguimiento de efectivo.
-- Laravel + Inertia + React, Neon (PostgreSQL), Stripe (pasarela), Laravel Cloud, Laravel AI SDK.
+### L&G System (`lg-system`) — en desarrollo
+- UVA de etiquetado (NestJS, Next.js 16, Drizzle, AWS Cognito/Amplify/S3, Playwright).
 
-### Bot de trading IA (`bot-trading-ia`) — en desarrollo
-- Proyecto en equipo: bot entrenado con datos e IA, señales por Telegram, panel web (estadísticas, señales, balance de futuros, apalancamiento).
-- Binance, SQLite, FastAPI, front Next.js (probable), despliegue Docker. Bot aún en entrenamiento.
+### Tridot / Asistencia 40H / POS
+- `tridot-mexico` (estudio, tridotmx.com), `asistencia-40h` (SaaS 40 h), `punto-de-venta`.
 
-### Otros (sin cambios recientes en este doc)
+### Otros
 - `bank-core`, `cafeteria-wordpress-astro`, `coparmex-evo-queretaro`, `zyra-mexico`
 
 ## Convenciones
 
 - Textos en **español**.
 - No inline imports (imports al inicio del módulo).
-- Mantener coherencia visual: fondo oscuro (`slate-950`), acentos sky/violet.
+- Paleta sky/violet sobre slate; **modo claro y oscuro** (`data-theme` + tokens en `src/styles/global.css`).
 - Imágenes remotas: registrar dominio en `astro.config.mjs` si se usan con `astro:assets`.

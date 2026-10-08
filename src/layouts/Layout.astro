@@ -9,7 +9,7 @@ interface Props {
 }
 const {
   title,
-  description = 'Joaquín León Quero. Ingeniero en Gestión de TI y desarrollador full-stack en Querétaro. Más de cinco años en TI, banca y producto digital. Proyectos, servicios y contacto.',
+  description = 'Joaquín León Quero. Desarrollador full-stack en Querétaro (NestJS, Next.js, Node.js, TypeScript) y cofundador de Tridot México. Automatización con agentes de IA, banca y producto a medida.',
 } = Astro.props;
 ---
 <!doctype html>
@@ -18,14 +18,27 @@ const {
     <meta charset="UTF-8" />
     <meta name="description" content={description} />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#020617" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#f4f6f9" data-theme-color />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title}</title>
+    <script is:inline>
+      (function () {
+        var stored = null;
+        try { stored = localStorage.getItem('theme'); } catch (e) {}
+        var theme = stored === 'light' || stored === 'dark'
+          ? stored
+          : (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        document.documentElement.dataset.theme = theme;
+        var meta = document.querySelector('[data-theme-color]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#020617' : '#f4f6f9');
+      })();
+    </script>
   </head>
-  <body class="min-h-screen bg-slate-950 text-slate-100 antialiased selection:bg-sky-400/30 selection:text-white">
+  <body class="min-h-screen bg-paper text-ink antialiased">
     <a href="#contenido" class="skip-link">Saltar al contenido</a>
     <Header />
     <slot />

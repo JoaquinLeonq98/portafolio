@@ -1,64 +1,113 @@
 ---
-
+const links = [
+  { href: '/#inicio', label: 'Inicio' },
+  { href: '/#proyectos', label: 'Proyectos' },
+  { href: '/#experiencia', label: 'Trayectoria' },
+  { href: '/#sobre-mi', label: 'Sobre mí' },
+  { href: '/#servicios', label: 'Servicios' },
+  { href: '/#stack', label: 'Stack' },
+];
 ---
-<header
-  class="sticky top-0 z-50 border-b border-white/5 bg-slate-950/80 backdrop-blur-md"
->
-  <nav class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-4 sm:px-6" aria-label="Principal">
+<header class="site-header sticky top-0 z-50 border-b border-line">
+  <nav class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-3 sm:px-8" aria-label="Principal">
     <a
       href="/#inicio"
       aria-label="Joaquín León Quero, inicio"
-      class="inline-flex min-h-11 items-center text-lg font-semibold tracking-tight text-white transition hover:text-sky-400"
+      class="inline-flex min-h-11 items-center text-lg font-semibold tracking-tight text-ink transition hover:text-accent"
     >
-      JLQ<span class="text-sky-400">.</span>
+      JLQ<span class="text-accent">.</span>
     </a>
 
-    <button
-      type="button"
-      id="nav-toggle"
-      class="inline-flex items-center justify-center rounded-lg border border-white/10 min-h-11 min-w-11 p-2 text-slate-300 md:hidden"
-      aria-expanded="false"
-      aria-controls="nav-panel"
-      aria-label="Abrir menú"
-    >
-      <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8h16M4 16h16" />
-      </svg>
-    </button>
+    <div class="flex items-center gap-1 md:order-last">
+      <button
+        type="button"
+        class="theme-toggle inline-flex min-h-11 min-w-11 items-center justify-center rounded-md text-muted transition hover:text-ink"
+        data-theme-toggle
+        aria-label="Cambiar a tema oscuro"
+        aria-pressed="false"
+      >
+        <svg class="theme-icon-moon h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+          <path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z" stroke-linejoin="round" />
+        </svg>
+        <svg class="theme-icon-sun h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+          <circle cx="12" cy="12" r="4" />
+          <path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4" stroke-linecap="round" />
+        </svg>
+      </button>
+      <button
+        type="button"
+        id="nav-toggle"
+        class="inline-flex min-h-11 min-w-11 items-center justify-center rounded-md text-muted transition hover:text-ink md:hidden"
+        aria-expanded="false"
+        aria-controls="nav-panel"
+        aria-label="Abrir menú"
+      >
+        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4 8h16M4 16h16" />
+        </svg>
+      </button>
+    </div>
 
     <div
       id="nav-panel"
-      class="absolute flex left-0 right-0 top-full hidden flex-col gap-1 border-b border-white/5 bg-slate-950/95 px-4 py-4 shadow-lg backdrop-blur-md md:static md:flex md:flex-row md:items-center md:gap-1 md:border-0 md:bg-transparent md:p-0 md:shadow-none"
+      class="nav-panel absolute left-0 right-0 top-full hidden flex-col gap-1 border-b border-line px-5 py-4 md:static md:ml-auto md:flex md:flex-row md:items-center md:gap-1 md:border-0 md:p-0"
     >
-      <a
-        class="inline-flex min-h-11 items-center rounded-lg px-3 py-2 text-sm text-slate-300 transition hover:bg-white/5 hover:text-white"
-        href="/#inicio">Inicio</a>
-      <a
-        class="inline-flex min-h-11 items-center rounded-lg px-3 py-2 text-sm text-slate-300 transition hover:bg-white/5 hover:text-white"
-        href="/#proyectos">Proyectos</a>
-      <a
-        class="inline-flex min-h-11 items-center rounded-lg px-3 py-2 text-sm text-slate-300 transition hover:bg-white/5 hover:text-white"
-        href="/#sobre-mi">Sobre mí</a>
-      <a
-        class="inline-flex min-h-11 items-center rounded-lg px-3 py-2 text-sm text-slate-300 transition hover:bg-white/5 hover:text-white"
-        href="/#servicios">Servicios</a>
-      <a
-        class="inline-flex min-h-11 items-center rounded-lg px-3 py-2 text-sm text-slate-300 transition hover:bg-white/5 hover:text-white"
-        href="/#stack">Stack</a>
-      <a
-        class="inline-flex min-h-11 items-center rounded-lg px-3 py-2 text-sm font-medium text-sky-400 transition hover:bg-sky-500/10"
-        href="/#contacto">Contacto</a>
+      {links.map((link) => (
+        <a class="nav-link inline-flex min-h-11 items-center px-3 text-sm text-muted transition hover:text-ink" href={link.href}>
+          {link.label}
+        </a>
+      ))}
+      <a class="nav-link inline-flex min-h-11 items-center px-3 text-sm font-medium text-accent transition" href="/#contacto">Contacto</a>
     </div>
   </nav>
 </header>
+
+<style>
+  .site-header { background: color-mix(in oklab, var(--paper) 86%, transparent); backdrop-filter: saturate(1.4) blur(14px); }
+  .nav-panel { background: var(--paper); }
+  @media (min-width: 768px) { .nav-panel { background: transparent; } }
+  .nav-link { text-decoration-line: underline; text-decoration-color: transparent; text-underline-offset: 6px; }
+  .nav-link:hover { text-decoration-color: var(--accent); }
+  .theme-icon-sun { display: none; }
+  :global([data-theme='dark']) .theme-icon-sun { display: block; }
+  :global([data-theme='dark']) .theme-icon-moon { display: none; }
+</style>
 
 <script>
   import { gsap } from 'gsap';
 
   const toggle = document.getElementById('nav-toggle');
   const panel = document.getElementById('nav-panel');
+  const themeToggle = document.querySelector<HTMLButtonElement>('[data-theme-toggle]');
+  const themeColor = document.querySelector('[data-theme-color]');
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   let menuAnimation: gsap.core.Tween | undefined;
+
+  function syncThemeLabel() {
+    const dark = document.documentElement.dataset.theme === 'dark';
+    themeToggle?.setAttribute('aria-label', dark ? 'Cambiar a tema claro' : 'Cambiar a tema oscuro');
+    themeToggle?.setAttribute('aria-pressed', dark ? 'true' : 'false');
+    themeColor?.setAttribute('content', dark ? '#020617' : '#f4f6f9');
+  }
+
+  function applyTheme(theme: 'light' | 'dark') {
+    document.documentElement.dataset.theme = theme;
+    syncThemeLabel();
+  }
+
+  themeToggle?.addEventListener('click', () => {
+    const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+    try { localStorage.setItem('theme', next); } catch { /* almacenamiento bloqueado */ }
+    if (!document.startViewTransition || reducedMotion.matches) applyTheme(next);
+    else document.startViewTransition(() => applyTheme(next));
+  });
+
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (event) => {
+    let stored: string | null = null;
+    try { stored = localStorage.getItem('theme'); } catch { /* almacenamiento bloqueado */ }
+    if (!stored) applyTheme(event.matches ? 'dark' : 'light');
+  });
+  syncThemeLabel();
 
   function clearMenuAnimation() {
     menuAnimation?.kill();
@@ -66,6 +115,13 @@
   }
   reducedMotion.addEventListener('change', clearMenuAnimation);
   window.matchMedia('(min-width: 768px)').addEventListener('change', clearMenuAnimation);
+
+  function closeMenu() {
+    clearMenuAnimation();
+    panel?.classList.add('hidden');
+    toggle?.setAttribute('aria-expanded', 'false');
+    toggle?.setAttribute('aria-label', 'Abrir menú');
+  }
 
   toggle?.addEventListener('click', () => {
     clearMenuAnimation();
@@ -83,10 +139,7 @@
 
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape' && toggle?.getAttribute('aria-expanded') === 'true') {
-      clearMenuAnimation();
-      panel?.classList.add('hidden');
-      toggle.setAttribute('aria-expanded', 'false');
-      toggle.setAttribute('aria-label', 'Abrir menú');
+      closeMenu();
       toggle.focus();
     }
   });
@@ -95,14 +148,9 @@
 
   panel?.querySelectorAll('a').forEach((link) => {
     link.addEventListener('click', () => {
-      if (window.matchMedia('(max-width: 767px)').matches) {
-        clearMenuAnimation();
-        panel.classList.add('hidden');
-        toggle?.setAttribute('aria-expanded', 'false');
-        toggle?.setAttribute('aria-label', 'Abrir menú');
-      }
+      if (window.matchMedia('(max-width: 767px)').matches) closeMenu();
     });
   });
 </script>
 
-<noscript><style>#nav-toggle{display:none}#nav-panel{display:flex;position:static;flex-wrap:wrap;flex-direction:row}header nav{flex-wrap:wrap}</style></noscript>
+<noscript><style>#nav-toggle,[data-theme-toggle]{display:none}#nav-panel{display:flex;position:static;flex-wrap:wrap;flex-direction:row}header nav{flex-wrap:wrap}</style></noscript>
